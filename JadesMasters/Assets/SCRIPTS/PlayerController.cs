@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class PlayerController : MonoBehaviour
 {
     //This is probably on the camera.
@@ -23,8 +24,9 @@ public class PlayerController : MonoBehaviour
 
     public float distance;
     Item currentItem;
+    
 
-    public GameObject prompt;
+   // public GameObject prompt;
 
     void Start()
     {
@@ -41,7 +43,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E) && currentItem != null)
         {
             canMove = false;
-            prompt.SetActive(false);
+          //  prompt.SetActive(false);
             currentItem.Interact(this);
         }
         // Movmement stuff 
@@ -75,14 +77,14 @@ public class PlayerController : MonoBehaviour
         {
             if (hit.collider.GetComponent<Item>() != null && currentItem == null)
             {
-                prompt.SetActive(true);
+                //prompt.SetActive(true);
                 currentItem = hit.collider.GetComponent<Item>();
             }
 
         }
         else
         {
-            prompt.SetActive(false);
+            //prompt.SetActive(false);
             currentItem = null;
         }
 

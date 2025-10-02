@@ -20,7 +20,7 @@ public class Item : MonoBehaviour
 
             uiActive = false;
             player.canMove = true;
-            player.prompt.SetActive(true);
+           // player.prompt.SetActive(true);
             uiPopup.SetActive(false);
         }
         else
@@ -28,7 +28,7 @@ public class Item : MonoBehaviour
 
             uiActive = true;
             player.canMove = false;
-            player.prompt.SetActive(false);
+            //player.prompt.SetActive(false);
             uiPopup.SetActive(true);
         }
 

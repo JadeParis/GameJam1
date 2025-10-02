@@ -6,11 +6,12 @@ TagManager:
   tags:
   - GameMusic
   - Tree
+  - Interactable
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - chalk
   - Water
   - UI
   - 
