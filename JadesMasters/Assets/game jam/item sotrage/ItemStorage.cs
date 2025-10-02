@@ -5,25 +5,21 @@ using UnityEngine;
 public class ItemStorage : MonoBehaviour
 {
     
-    public string Name;
-    public int ID;
- 
-    
-    
-    
-    public void PickUp(string name, int id)
+   
+   
+    public List<string> TheList = new List<string>();
+    public string myListName = ("ItemsCollected");
+
+
+
+    public void PickUp()
     {
        
-            Debug.Log($"Picked up {name} with ID {id}");
-        
-        
-            Name = name;
-            ID = id;
-            
-            Debug.Log("Added");
            
+            Debug.Log("Added");
 
-        
+        Debug.Log(myListName);
+
     }
 
 

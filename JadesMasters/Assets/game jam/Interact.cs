@@ -4,102 +4,149 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.ProBuilder;
 using static UnityEditor.Progress;
+using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class Interact : MonoBehaviour
 {
     public Item currentItem;
     public float distance;
     public GameObject phone;
+    public GameObject phoneSprite;
     public bool phoneOn;
     public List<GameObject> myGameObjects;
 
+    public DialogueTrigger TriggerGrave;
+    public DialogueTrigger TriggerStore;
     public ItemStorage itemStore;
+    
+    public DialogueManager dialogueManager;
+    
     // Start is called before the first frame update
     void Start()
     {
-        phone.SetActive(false);
+        
         myGameObjects = new List<GameObject>();
         phoneOn = false;
+       
     }
 
     // Update is called once per frame
     void Update()
     {
+        Interactable();
+
+        if (phoneOn)
+        {
+            phone.SetActive(true);
+            phoneSprite.SetActive(false);
+        }
+        else
+        {
+            phone.SetActive(false);
+            phoneSprite.SetActive(true);
+        }
+    }
+
+    public void Interactable()
+    {
         RaycastHit hit;
 
-       
 
         if (Physics.Raycast(transform.position, transform.forward, out hit, distance))
+        {
+            if (Input.GetKeyDown(KeyCode.E))
             {
-                if (Input.GetKeyDown(KeyCode.E))
+                Debug.Log("pressed");
+
+                if (hit.transform.CompareTag("Interactable"))
                 {
-                    Debug.Log("pressed");
+                    itemStore.PickUp();
+                    //GameObject.Findl("chalk").GetComponent<ItemStorage>().PickUp("Chalk", 1);
+                    Debug.Log("object collected");
+                    ///pick up object 
 
-                    if (hit.transform.CompareTag("Interactable"))
+                }
+
+                if (hit.transform.CompareTag("NPCGrave"))
+                {
+                    TriggerGrave.TriggerDialogue();
+                    dialogueManager.grave = true;
+
+                   
+                    ///pick up object 
+
+                }
+
+                if (hit.transform.CompareTag("NPCStore"))
+                {
+                    TriggerStore.TriggerDialogue();
+                    dialogueManager.steal = true;
+                   
+                    ///pick up object 
+
+                }
+
+                if (hit.transform.CompareTag("Candle"))
+                {
+
+                    //collect candle
+
+
+                    Debug.Log("candle triggered");
+
+                }
+
+                if (hit.transform.CompareTag("Grave"))
+                {
+                    if (dialogueManager.grave)
                     {
-
-                        //GameObject.Findl("chalk").GetComponent<ItemStorage>().PickUp("Chalk", 1);
-                        Debug.Log("object collected");
-                        ///pick up object 
-                    
-
+                        
+                        SceneManager.LoadSceneAsync(2);
+                        //scene two cut scene 
                     }
                    
-                
 
                 }
 
-                //if (hit.collider.GetComponent<Item>() != null && currentItem == null)
-                //{
-                //    //prompt.SetActive(true);
-                //    currentItem = hit.collider.GetComponent<Item>();
-                //}
-                //else
-                //{
-                ////prompt.SetActive(false);
-                //currentItem = null;
+
+
             }
-            else
+
+            
+        }
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.E))
             {
-                if(Input.GetKeyDown(KeyCode.E))
+
+                if (phoneOn == false)
                 {
                     
-                        if (phoneOn == false)
-                        {
-                            phone.SetActive(true);
-                            phoneOn = true;
-                            Debug.Log("nothing");
-                        }
-
-                        else
-                        {
-                            phone.SetActive(false);
-                            phoneOn = false;
-                        }
-                    
+                    phoneOn = true;
+                    Debug.Log("nothing");
                 }
+
+                else
+                {
+                  
+                    phoneOn = false;
+                }
+
             }
+        }
 
-         
-         
 
-        
 
 
         Debug.DrawRay(transform.position, transform.forward * distance, Color.green);
 
-        //if (phoneOn == true)
-        //{
-        //    phone.SetActive(false);
-        //    phoneOn = false;
-        //}
+     
     }
 
-                   
 
 
-
-    }
+}
 
 
 

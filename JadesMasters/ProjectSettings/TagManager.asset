@@ -7,6 +7,11 @@ TagManager:
   - GameMusic
   - Tree
   - Interactable
+  - NPC
+  - NPCGrave
+  - NPCStore
+  - Candle
+  - Grave
   layers:
   - Default
   - TransparentFX
