@@ -27,12 +27,14 @@ public class Interact : MonoBehaviour
     
     public DialogueManager dialogueManager;
 
-    public GameObject chalkCross;
-    public GameObject matchesCross;
-    public GameObject bodyCross;
-    public GameObject axeCross;
-    public GameObject axeSprite;
-    public GameObject axetask;
+    //public GameObject chalkCross;
+    //public GameObject matchesCross;
+    //public GameObject bodyCross;
+    //public GameObject axeCross;
+    //public GameObject axeSprite;
+    //public GameObject axetask;
+
+
     public GameObject axe;
     public bool axeCollected;
 
@@ -40,13 +42,18 @@ public class Interact : MonoBehaviour
     public GameObject candlesCross;
     public bool CandleCollected;
 
+
+    //scripts 
     public DialogueManager dialogue;
     public ItemStorage items;
-
+    public Ritual ritual;
+    public TaskManager taskManager;
+   
 
     // Start is called before the first frame update
     void Start()
     {
+      
         candleListMade = false;
         candleScore = 0;
         myGameObjects = new List<GameObject>();
@@ -61,6 +68,8 @@ public class Interact : MonoBehaviour
     void Update()
     {
         Interactable();
+        Phone();
+
 
         if (phoneOn)
         {
@@ -93,6 +102,8 @@ public class Interact : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
+                //collect audio here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
                 Debug.Log("pressed");
                 phoneOn = false;
 
@@ -172,6 +183,7 @@ public class Interact : MonoBehaviour
                     chalkCross.SetActive(true);
                     //scene two cut scene 
 
+                    //////// ADD REF TO NPC MAD HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                     InventoryInfo chalk = new InventoryInfo();
                     chalk.Name = "Chalk";
                     items.collected.Add(chalk);
@@ -189,7 +201,7 @@ public class Interact : MonoBehaviour
                     matches.Name = "Matches";
                     items.collected.Add(matches);
                     matches.Quantity = 1;
-                    matches.GameObject = hit.collider.gameObject;
+                    //matches.GameObject = hit.collider.gameObject;
                     //turn off 
                     hit.collider.gameObject.SetActive(false);
                     
@@ -216,7 +228,9 @@ public class Interact : MonoBehaviour
 
                 if (hit.transform.CompareTag("Body"))
                 {
-                   //add a cross task to this 
+                    //add a cross task to this 
+                    
+                   
 
                     InventoryInfo body = new InventoryInfo();
                     body.Name = "Body";
@@ -224,6 +238,9 @@ public class Interact : MonoBehaviour
                     body.Quantity = 1;
                     body.GameObject = hit.collider.gameObject;
                     hit.collider.gameObject.SetActive(false);
+
+                    StopAllCoroutines();
+                    StartCoroutine(Wait());
 
                 }
 
@@ -240,29 +257,22 @@ public class Interact : MonoBehaviour
 
                 }
 
-
-            }
-
-            else
-            {
-                if (Input.GetKeyDown(KeyCode.Tab))
+                if (hit.transform.CompareTag("RitualSpot"))
                 {
 
-                    if (phoneOn == false)
-                    {
+                    ritual.placeCandles();
+                    ritual.PlaceItems();
 
-                        phoneOn = true;
-                        Debug.Log("nothing");
-                    }
-
-                    else
-                    {
-
-                        phoneOn = false;
-                    }
+                    ///pick up object 
 
                 }
+
+
             }
+
+            
+               
+            
 
 
 
@@ -273,7 +283,33 @@ public class Interact : MonoBehaviour
         }
     }
 
+    public void Phone()
+    {
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            Debug.Log("TabPressed");
 
+            if (phoneOn == false)
+            {
+
+                phoneOn = true;
+                Debug.Log("nothing");
+            }
+
+            else
+            {
+
+                phoneOn = false;
+            }
+
+        }
+    }
+
+    IEnumerator Wait()
+    {
+        //audio here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        yield return new WaitForSeconds(4);
+    }
 
 }
 

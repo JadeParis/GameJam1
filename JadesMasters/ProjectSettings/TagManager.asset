@@ -16,6 +16,8 @@ TagManager:
   - Chalk
   - Matches
   - Axe
+  - RitualSpot
+  - Body
   layers:
   - Default
   - TransparentFX
