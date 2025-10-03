@@ -60,8 +60,8 @@ public class Interact : MonoBehaviour
         phoneOn = false;
         allowPhone = true;
         CandleCollected = false;
-        axeSprite.SetActive(false);
-        axetask.SetActive(false);
+        taskManager.axeSprite.SetActive(false);
+
     }
 
     // Update is called once per frame
@@ -110,23 +110,57 @@ public class Interact : MonoBehaviour
                 if (hit.transform.CompareTag("NPCGrave"))
                 {
                     allowPhone = false;
-                    TriggerGrave.TriggerDialogue();
+                    
 
                     dialogueManager.grave = true;
 
-                    axetask.SetActive(true);
+                    taskManager.AxeActive = true;
+                    taskManager.DigActive = true;
                     axe.SetActive(true);
-
+                    TriggerGrave.TriggerDialogue();
                     ///pick up object 
 
                 }
 
+                if (hit.transform.CompareTag("Grave"))
+                {
+                    if (dialogueManager.grave && axeCollected)
+                    {
+                        taskManager.bodyTaskComplete = true;
+                        SceneManager.LoadSceneAsync(2);
+                        taskManager.dayTwo = true;
+                        //scene two cut scene 
+                    }
+
+
+
+                }
+
+                if (hit.transform.CompareTag("Axe"))
+                {
+                    taskManager.axeTaskComplete = true;
+                    //scene two cut scene 
+                    
+                    axeCollected = true;
+
+                    InventoryInfo axe = new InventoryInfo();
+                    axe.Name = "Axe";
+                    items.collected.Add(axe);
+                    axe.Quantity = 1;
+                    axe.GameObject = hit.collider.gameObject;
+                    hit.collider.gameObject.SetActive(false);
+
+                }
+
+                /////////day one ^^^^^^^^^^^^^^^^^^^^^^^^^^
                 if (hit.transform.CompareTag("NPCStore"))
                 {
                     allowPhone = false;
                     TriggerStore.TriggerDialogue();
                     dialogueManager.steal = true;
 
+                    taskManager.steal = true;
+                    //PHONE SHAKE 
                     ///pick up object 
                     ///
 
@@ -164,23 +198,12 @@ public class Interact : MonoBehaviour
 
                 }
 
-                if (hit.transform.CompareTag("Grave"))
-                {
-                    if (dialogueManager.grave && axeCollected)
-                    {
-                        bodyCross.SetActive(true);
-                        SceneManager.LoadSceneAsync(2);
-                        //scene two cut scene 
-                    }
-
-
-
-                }
+                
 
                 if (hit.transform.CompareTag("Chalk"))
                 {
-
-                    chalkCross.SetActive(true);
+                    taskManager.chalkTaskComplete = true;
+                  
                     //scene two cut scene 
 
                     //////// ADD REF TO NPC MAD HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -196,7 +219,7 @@ public class Interact : MonoBehaviour
 
                 if (hit.transform.CompareTag("Matches"))
                 {
-                    matchesCross.SetActive(true);
+                    taskManager.matchesTaskComplete = true;
                     InventoryInfo matches = new InventoryInfo();
                     matches.Name = "Matches";
                     items.collected.Add(matches);
@@ -210,27 +233,12 @@ public class Interact : MonoBehaviour
                 }
 
 
-                if (hit.transform.CompareTag("Axe"))
-                {
-                    axeCross.SetActive(true);
-                    //scene two cut scene 
-                    axeSprite.SetActive(true);
-                    axeCollected = true;
-
-                    InventoryInfo axe = new InventoryInfo();
-                    axe.Name = "Axe";
-                    items.collected.Add(axe);
-                    axe.Quantity = 1;
-                    axe.GameObject = hit.collider.gameObject;
-                    hit.collider.gameObject.SetActive(false);
-
-                }
+              
 
                 if (hit.transform.CompareTag("Body"))
                 {
                     //add a cross task to this 
                     
-                   
 
                     InventoryInfo body = new InventoryInfo();
                     body.Name = "Body";
