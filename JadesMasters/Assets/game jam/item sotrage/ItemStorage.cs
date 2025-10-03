@@ -27,5 +27,6 @@ public class InventoryInfo
 {
     public string Name;
     public int Quantity;
+    public GameObject GameObject;
     
 }

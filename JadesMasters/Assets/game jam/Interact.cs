@@ -7,6 +7,8 @@ using static UnityEditor.Progress;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.SocialPlatforms.Impl;
+using System.Linq;
+using System;
 
 public class Interact : MonoBehaviour
 {
@@ -40,6 +42,8 @@ public class Interact : MonoBehaviour
 
     public DialogueManager dialogue;
     public ItemStorage items;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -123,7 +127,7 @@ public class Interact : MonoBehaviour
                     candleScore += 1;
                     //collect candle
 
-                    Destroy(hit.collider.gameObject);
+                    hit.collider.gameObject.SetActive(false);
 
                     if (candleScore == 5)
                     {
@@ -165,24 +169,66 @@ public class Interact : MonoBehaviour
                 if (hit.transform.CompareTag("Chalk"))
                 {
 
-                    Destroy(hit.collider.gameObject);
                     chalkCross.SetActive(true);
                     //scene two cut scene 
 
+                    InventoryInfo chalk = new InventoryInfo();
+                    chalk.Name = "Chalk";
+                    items.collected.Add(chalk);
+                    chalk.Quantity = 1;
+                    chalk.GameObject = hit.collider.gameObject;
+
+                    hit.collider.gameObject.SetActive(false);
+                    //items.PickUp("Laptop", 1);
                 }
 
                 if (hit.transform.CompareTag("Matches"))
                 {
-
-                    Destroy(hit.collider.gameObject);
                     matchesCross.SetActive(true);
-
                     InventoryInfo matches = new InventoryInfo();
-                    matches.Name = "Mathces";
+                    matches.Name = "Matches";
                     items.collected.Add(matches);
                     matches.Quantity = 1;
-                    //items.PickUp("Laptop", 1);
+                    matches.GameObject = hit.collider.gameObject;
+                    //turn off 
+                    hit.collider.gameObject.SetActive(false);
+                    
+
+
                 }
+
+
+                if (hit.transform.CompareTag("Axe"))
+                {
+                    axeCross.SetActive(true);
+                    //scene two cut scene 
+                    axeSprite.SetActive(true);
+                    axeCollected = true;
+
+                    InventoryInfo axe = new InventoryInfo();
+                    axe.Name = "Axe";
+                    items.collected.Add(axe);
+                    axe.Quantity = 1;
+                    axe.GameObject = hit.collider.gameObject;
+                    hit.collider.gameObject.SetActive(false);
+
+                }
+
+                if (hit.transform.CompareTag("Body"))
+                {
+                   //add a cross task to this 
+
+                    InventoryInfo body = new InventoryInfo();
+                    body.Name = "Body";
+                    items.collected.Add(body);
+                    body.Quantity = 1;
+                    body.GameObject = hit.collider.gameObject;
+                    hit.collider.gameObject.SetActive(false);
+
+                }
+
+
+                ////Check Laptop Screen Start
 
                 if (hit.transform.CompareTag("Laptop"))
                 {
@@ -193,28 +239,6 @@ public class Interact : MonoBehaviour
                     ///pick up object 
 
                 }
-
-                if (hit.transform.CompareTag("Axe"))
-                {
-
-                    Destroy(hit.collider.gameObject);
-                    axeCross.SetActive(true);
-                    //scene two cut scene 
-                    axeSprite.SetActive(true);
-                    axeCollected = true;
-
-
-                    InventoryInfo axe = new InventoryInfo();
-                    axe.Name = "Axe";
-                    items.collected.Add(axe);
-                    axe.Quantity = 1;
-
-
-                    
-
-
-                }
-
 
 
             }

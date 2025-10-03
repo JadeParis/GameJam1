@@ -9,7 +9,7 @@ public class Ritual : MonoBehaviour
 {
     public ItemStorage items;
     public List<GameObject> Candles = new List<GameObject>();
-
+    
     public int SacraficedAmount;
 
    
@@ -42,7 +42,10 @@ public class Ritual : MonoBehaviour
 
         }
     }
-
+    public void PlaceItems()
+    {
+        
+    }
     private void OnTriggerStay(Collider other)
     {
         if (Input.GetKeyDown(KeyCode.E))
