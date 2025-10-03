@@ -13,6 +13,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject _gamePadCanvas;
     [SerializeField] private GameObject _keyboardCanvas;
 
+    public PlayerController player;
 
     [Header("Player Scripts to deactivate on Pause")]
 
@@ -64,7 +65,7 @@ public class MenuManager : MonoBehaviour
         Debug.LogWarning("Paused");
 
         isPaused = true;
-
+        player.canMove = false;
         Time.timeScale = 0f;
 
 
@@ -79,7 +80,7 @@ public class MenuManager : MonoBehaviour
 
     public void Unpause()
     {
-
+        player.canMove = true;
         Debug.LogWarning("unPaused");
         isPaused = false;
 

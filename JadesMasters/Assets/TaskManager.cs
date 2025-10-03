@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class TaskManager : MonoBehaviour
 {
+    public bool bodyTaskComplete;
+    public GameObject gravetask;
+    public GameObject gravecross;
+
+
     public bool diggingTaskComplete;
     public GameObject diggingtask;
     public GameObject diggingCross;
@@ -22,11 +27,9 @@ public class TaskManager : MonoBehaviour
     public GameObject matchesCross;
 
 
-    public bool bodyTaskComplete;
+   
     public bool cutBodyTaskComplete;
-    public GameObject bodyTask;
-    public GameObject bodyCross;
-
+    
     public GameObject CutupBody;
     public GameObject cutBodyCross;
 
@@ -45,12 +48,13 @@ public class TaskManager : MonoBehaviour
 
     public void Start()
     {
+        gravetask.SetActive(true);
         axeTask.SetActive(false);
         stealTask.SetActive(false);
         diggingtask.SetActive(false);
         chalkTask.SetActive(false);
         matchesTask.SetActive(false);
-        bodyTask.SetActive(false);
+       
         candlesTask.SetActive(false);
         CutupBody.SetActive(false);
     }
@@ -76,6 +80,17 @@ public class TaskManager : MonoBehaviour
         {
             stealTask.SetActive(true);
         }
+        if (bodyTaskComplete)
+        {
+            gravecross.SetActive(true);
+        }
+        if (diggingTaskComplete)
+        {
+            gravecross.SetActive(true);
+            diggingtask.SetActive(true);
+        }
+        
+        
     }
     public void DayTwo()
     {
@@ -84,7 +99,7 @@ public class TaskManager : MonoBehaviour
             candlesTask.SetActive(true);
             chalkTask.SetActive(true);
             matchesTask.SetActive(true);
-            bodyTask.SetActive(true);
+            //bodyTask.SetActive(true);
             CutupBody.SetActive(true);
         }
     }
@@ -128,15 +143,7 @@ public class TaskManager : MonoBehaviour
         {
             matchesCross.SetActive(false);
         }
-        ///////////////////////////////////////////
-        if (bodyTaskComplete)
-        {
-            bodyCross.SetActive(true);
-        }
-        else
-        {
-            bodyCross.SetActive(false);
-        }
+        
         ///////////////////////////////////////////////////////
         if (cutBodyTaskComplete)
         {

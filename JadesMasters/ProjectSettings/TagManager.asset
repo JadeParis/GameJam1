@@ -18,6 +18,7 @@ TagManager:
   - Axe
   - RitualSpot
   - Body
+  - NPCCreep
   layers:
   - Default
   - TransparentFX

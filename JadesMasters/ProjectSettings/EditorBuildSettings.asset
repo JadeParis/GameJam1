@@ -6,12 +6,18 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/For GameJam/MainMenu.unity
+    path: Assets/Scenes/For GameJam/A.MainMenu.unity
     guid: 37b425c102a83c14dad254caea959da9
   - enabled: 1
-    path: Assets/Scenes/For GameJam/Day Two.unity
+    path: Assets/Scenes/For GameJam/B.Day One.unity
     guid: 140bf8df9ca365e448496a850a253f3d
   - enabled: 1
-    path: Assets/Scenes/For GameJam/Night One Cutscene.unity
+    path: Assets/Scenes/For GameJam/C.NightOneCutscene.unity
     guid: 1e8b86c12d4023943bd21b080116fed4
+  - enabled: 1
+    path: Assets/Scenes/For GameJam/D.Day Two.unity
+    guid: 690af6905600e0341946f26bd0d6094b
+  - enabled: 1
+    path: Assets/Scenes/For GameJam/E.FinalCutScene.unity
+    guid: d8543fa4e4b23e749afe4cfc9614f5e1
   m_configObjects: {}

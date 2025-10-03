@@ -9,6 +9,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.SocialPlatforms.Impl;
 using System.Linq;
 using System;
+using Unity.Collections;
 
 public class Interact : MonoBehaviour
 {
@@ -23,8 +24,12 @@ public class Interact : MonoBehaviour
 
     public DialogueTrigger TriggerGrave;
     public DialogueTrigger TriggerStore;
+    public DialogueTrigger TriggerCreep;
     public ItemStorage itemStore;
-    
+
+    public ShakePhone shake;
+
+    public GameObject candleHolder;
     public DialogueManager dialogueManager;
 
     //public GameObject chalkCross;
@@ -34,7 +39,7 @@ public class Interact : MonoBehaviour
     //public GameObject axeSprite;
     //public GameObject axetask;
 
-
+    public GameObject reddit;
     public GameObject axe;
     public bool axeCollected;
 
@@ -48,12 +53,20 @@ public class Interact : MonoBehaviour
     public ItemStorage items;
     public Ritual ritual;
     public TaskManager taskManager;
-   
 
+    public int candleScore;
+    public bool candleListMade;
+    public GameObject chalk;
+
+    public bool daytwo;
     // Start is called before the first frame update
     void Start()
     {
-      
+
+        player.transform.localPosition = StartingPoint.transform.position;
+        player.rotation = StartingPoint.transform.rotation;
+        chalk.SetActive(false);
+        reddit.SetActive(false);
         candleListMade = false;
         candleScore = 0;
         myGameObjects = new List<GameObject>();
@@ -90,9 +103,12 @@ public class Interact : MonoBehaviour
             UIphone.SetActive(false);
             phoneSprite.SetActive(false);
         }
+
+        
     }
-    public int candleScore;
-    public bool candleListMade;
+    public Transform player;
+    public Transform StartingPoint;
+    public bool talking;
     public void Interactable()
     {
         RaycastHit hit;
@@ -109,15 +125,22 @@ public class Interact : MonoBehaviour
 
                 if (hit.transform.CompareTag("NPCGrave"))
                 {
-                    allowPhone = false;
-                    
 
+                    allowPhone = false;
+                  
+                    
+                    taskManager.bodyTaskComplete = true;
                     dialogueManager.grave = true;
 
                     taskManager.AxeActive = true;
                     taskManager.DigActive = true;
                     axe.SetActive(true);
-                    TriggerGrave.TriggerDialogue();
+                    if (!talking)
+                    {
+                        TriggerGrave.TriggerDialogue();
+                        talking = true;
+                    }
+                    
                     ///pick up object 
 
                 }
@@ -126,9 +149,14 @@ public class Interact : MonoBehaviour
                 {
                     if (dialogueManager.grave && axeCollected)
                     {
-                        taskManager.bodyTaskComplete = true;
+                        
                         SceneManager.LoadSceneAsync(2);
+                        
+                        player.transform.localPosition = StartingPoint.transform.position;
+                        player.rotation = StartingPoint.transform.rotation;
+                        
                         taskManager.dayTwo = true;
+                        daytwo = true;
                         //scene two cut scene 
                     }
 
@@ -155,11 +183,45 @@ public class Interact : MonoBehaviour
                 /////////day one ^^^^^^^^^^^^^^^^^^^^^^^^^^
                 if (hit.transform.CompareTag("NPCStore"))
                 {
+                    if (!talking)
+                    {
+                        TriggerStore.TriggerDialogue();
+                        talking = true;
+                    }
                     allowPhone = false;
-                    TriggerStore.TriggerDialogue();
-                    dialogueManager.steal = true;
+                    
+                    
+                    if (daytwo)
+                    {
+                        chalk.SetActive(true);
+                        dialogueManager.steal = true;
 
-                    taskManager.steal = true;
+                        taskManager.steal = true;
+
+                        shake.Shake();
+
+                        //set matches true
+                    }
+                    
+                   
+
+                }
+
+                if (hit.transform.CompareTag("NPCCreep"))
+                {
+                    allowPhone = false;
+                    if (!talking)
+                    {
+                        TriggerCreep.TriggerDialogue();
+                        talking = true;
+                    }
+
+
+                    if (daytwo)
+                    {
+                        chalk.SetActive(true);
+                    }
+                  
                     //PHONE SHAKE 
                     ///pick up object 
                     ///
@@ -169,6 +231,10 @@ public class Interact : MonoBehaviour
 
                 if (hit.transform.CompareTag("Candle"))
                 {
+                    if (!daytwo)
+                    {
+                        candleHolder.SetActive(false);
+                    }
                     candleScore += 1;
                     //collect candle
 
@@ -246,7 +312,7 @@ public class Interact : MonoBehaviour
                     body.Quantity = 1;
                     body.GameObject = hit.collider.gameObject;
                     hit.collider.gameObject.SetActive(false);
-
+                    taskManager.cutBodyTaskComplete = true;
                     StopAllCoroutines();
                     StartCoroutine(Wait());
 
@@ -257,10 +323,28 @@ public class Interact : MonoBehaviour
 
                 if (hit.transform.CompareTag("Laptop"))
                 {
-                    allowPhone = false;
+
+                    if (!Screenup) // If laptop is CLOSED -> open it
+                    {
+                        allowPhone = false;
+                        reddit.SetActive(true);
+                        Flashing.SetActive(true);
+                        Screenup = true;
+                        
+                    }
+
+                    else // If laptop is OPEN -> close it
+                    {
+                        reddit.SetActive(false);
+                        Flashing.SetActive(false);
+                        allowPhone = true;
+                        Screenup = false;
+
+                        shake.shakestart();
+                    }
 
 
-
+                   
                     ///pick up object 
 
                 }
@@ -278,9 +362,8 @@ public class Interact : MonoBehaviour
 
             }
 
-            
-               
-            
+
+           
 
 
 
@@ -291,6 +374,8 @@ public class Interact : MonoBehaviour
         }
     }
 
+    public GameObject Flashing;
+    public bool Screenup;
     public void Phone()
     {
         if (Input.GetKeyDown(KeyCode.Tab))
@@ -318,6 +403,8 @@ public class Interact : MonoBehaviour
         //audio here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         yield return new WaitForSeconds(4);
     }
+
+  
 
 }
 
