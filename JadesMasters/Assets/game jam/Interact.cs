@@ -28,21 +28,29 @@ public class Interact : MonoBehaviour
     public GameObject chalkCross;
     public GameObject matchesCross;
     public GameObject bodyCross;
+    public GameObject axeCross;
+    public GameObject axeSprite;
+    public GameObject axetask;
+    public GameObject axe;
+    public bool axeCollected;
 
     //Candle Collection
     public GameObject candlesCross;
     public bool CandleCollected;
 
     public DialogueManager dialogue;
-
+    public ItemStorage items;
     // Start is called before the first frame update
     void Start()
     {
+        candleListMade = false;
         candleScore = 0;
         myGameObjects = new List<GameObject>();
         phoneOn = false;
         allowPhone = true;
         CandleCollected = false;
+        axeSprite.SetActive(false);
+        axetask.SetActive(false);
     }
 
     // Update is called once per frame
@@ -71,6 +79,7 @@ public class Interact : MonoBehaviour
         }
     }
     public int candleScore;
+    public bool candleListMade;
     public void Interactable()
     {
         RaycastHit hit;
@@ -82,26 +91,17 @@ public class Interact : MonoBehaviour
             {
                 Debug.Log("pressed");
                 phoneOn = false;
-                
-
-                if (hit.transform.CompareTag("Interactable") && !phoneOn)
-                {
-                    itemStore.PickUp();
-                    //GameObject.Findl("chalk").GetComponent<ItemStorage>().PickUp("Chalk", 1);
-                    Debug.Log("object collected");
-                    ///pick up object 
-                    ///
-
-                }
 
                 if (hit.transform.CompareTag("NPCGrave"))
                 {
                     allowPhone = false;
                     TriggerGrave.TriggerDialogue();
-                       
-                        dialogueManager.grave = true;
 
-                 
+                    dialogueManager.grave = true;
+
+                    axetask.SetActive(true);
+                    axe.SetActive(true);
+
                     ///pick up object 
 
                 }
@@ -114,7 +114,7 @@ public class Interact : MonoBehaviour
 
                     ///pick up object 
                     ///
-                    
+
 
                 }
 
@@ -122,77 +122,131 @@ public class Interact : MonoBehaviour
                 {
                     candleScore += 1;
                     //collect candle
-                    
+
                     Destroy(hit.collider.gameObject);
 
                     if (candleScore == 5)
                     {
-                        candlesCross.SetActive (true);
+                        candlesCross.SetActive(true);
                     }
                     Debug.Log("candle triggered");
 
-                   
+                    
+                    if (candleListMade)
+                    {
+
+                        InventoryInfo candle = items.collected.Find(i => i.Name == "Candle");
+                        candle.Quantity += 1;
+                    }
+                    else
+                    {
+                        InventoryInfo candle = new InventoryInfo();
+                        candle.Name = "Candle";
+                        items.collected.Add(candle);
+                        candle.Quantity = 1;
+                        candleListMade = true;
+                    }
+
                 }
 
                 if (hit.transform.CompareTag("Grave"))
                 {
-                    if (dialogueManager.grave)
+                    if (dialogueManager.grave && axeCollected)
                     {
                         bodyCross.SetActive(true);
                         SceneManager.LoadSceneAsync(2);
                         //scene two cut scene 
                     }
 
-                   
+
 
                 }
 
                 if (hit.transform.CompareTag("Chalk"))
                 {
-                    if (dialogueManager.grave)
+
+                    Destroy(hit.collider.gameObject);
+                    chalkCross.SetActive(true);
+                    //scene two cut scene 
+
+                }
+
+                if (hit.transform.CompareTag("Matches"))
+                {
+
+                    Destroy(hit.collider.gameObject);
+                    matchesCross.SetActive(true);
+
+                    InventoryInfo matches = new InventoryInfo();
+                    matches.Name = "Mathces";
+                    items.collected.Add(matches);
+                    matches.Quantity = 1;
+                    //items.PickUp("Laptop", 1);
+                }
+
+                if (hit.transform.CompareTag("Laptop"))
+                {
+                    allowPhone = false;
+
+
+
+                    ///pick up object 
+
+                }
+
+                if (hit.transform.CompareTag("Axe"))
+                {
+
+                    Destroy(hit.collider.gameObject);
+                    axeCross.SetActive(true);
+                    //scene two cut scene 
+                    axeSprite.SetActive(true);
+                    axeCollected = true;
+
+
+                    InventoryInfo axe = new InventoryInfo();
+                    axe.Name = "Axe";
+                    items.collected.Add(axe);
+                    axe.Quantity = 1;
+
+
+                    
+
+
+                }
+
+
+
+            }
+
+            else
+            {
+                if (Input.GetKeyDown(KeyCode.Tab))
+                {
+
+                    if (phoneOn == false)
                     {
 
-                        chalkCross.SetActive(true);
-                        //scene two cut scene 
+                        phoneOn = true;
+                        Debug.Log("nothing");
                     }
 
-                    
+                    else
+                    {
+
+                        phoneOn = false;
+                    }
 
                 }
-
-
-
             }
 
-            
+
+
+
+            Debug.DrawRay(transform.position, transform.forward * distance, Color.green);
+
+
         }
-        else
-        {
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-
-                if (phoneOn == false)
-                {
-                    
-                    phoneOn = true;
-                    Debug.Log("nothing");
-                }
-
-                else 
-                {
-                  
-                    phoneOn = false;
-                }
-
-            }
-        }
-
-
-
-
-        Debug.DrawRay(transform.position, transform.forward * distance, Color.green);
-
-     
     }
 
 

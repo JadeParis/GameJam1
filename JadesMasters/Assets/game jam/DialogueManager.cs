@@ -17,7 +17,9 @@ public class DialogueManager : MonoBehaviour
 
     public bool grave;
     public Interact interact;
-   
+
+    public GameObject graveToDig;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -82,7 +84,7 @@ public class DialogueManager : MonoBehaviour
             
         }
     }
-    public GameObject graveToDig;
+   
     void EndDialogue()
     {
         

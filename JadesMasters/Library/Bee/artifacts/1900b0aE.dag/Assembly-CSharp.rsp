@@ -373,6 +373,7 @@
 "Assets/game jam/MainMenu/MainMenu.cs"
 "Assets/HeadBobController.cs"
 "Assets/Laptop.cs"
+"Assets/Ritual.cs"
 "Assets/SCRIPTS/BlinkTransition.cs"
 "Assets/SCRIPTS/BUTTON.cs"
 "Assets/SCRIPTS/Change Scenes.cs"

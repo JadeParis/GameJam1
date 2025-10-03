@@ -1,26 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Xml.Linq;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class ItemStorage : MonoBehaviour
 {
+
+
+    public List<InventoryInfo> collected = new List<InventoryInfo>();
+
+
+    //public void Awake()
+    //{
+    //    List<ItemStorage> inventory = new List<ItemStorage>();
+
+    //}
+  
+ 
+}
+
+
+[System.Serializable]
+public class InventoryInfo
+{
+    public string Name;
+    public int Quantity;
     
-   
-   
-    public List<string> TheList = new List<string>();
-    public string myListName = ("ItemsCollected");
-
-
-
-    public void PickUp()
-    {
-       
-           
-            Debug.Log("Added");
-
-        Debug.Log(myListName);
-
-    }
-
-
 }
