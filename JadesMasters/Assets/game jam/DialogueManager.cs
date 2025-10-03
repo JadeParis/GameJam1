@@ -16,8 +16,8 @@ public class DialogueManager : MonoBehaviour
     public bool steal;
 
     public bool grave;
+    public Interact interact;
    
-
     // Start is called before the first frame update
     void Start()
     {
@@ -28,9 +28,18 @@ public class DialogueManager : MonoBehaviour
         steal = false;
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            EndDialogue();
+        }
+    }
+
     public void StartDialoque(Dialogue dialogue)
     {
 
+       
         animator.SetBool("IsOpen", true);
         nameText.text = dialogue.name;
 
@@ -43,11 +52,13 @@ public class DialogueManager : MonoBehaviour
             sentences.Enqueue(sentence);
         }
 
-        DisplayNextSentence();
+       DisplayNextSentence();
+
     }
 
   public void DisplayNextSentence()
     {
+        
         if (sentences.Count == 0)
         {
             EndDialogue();
@@ -74,6 +85,7 @@ public class DialogueManager : MonoBehaviour
     public GameObject graveToDig;
     void EndDialogue()
     {
+        
         animator.SetBool("IsOpen", false);
         Debug.Log("end of convosation");
 
@@ -86,9 +98,9 @@ public class DialogueManager : MonoBehaviour
             matches.SetActive(false);
         }
 
-     
-            
-            //steal the matches 
-      
+        interact.allowPhone = true;
+
+        //steal the matches 
+
     }
 }

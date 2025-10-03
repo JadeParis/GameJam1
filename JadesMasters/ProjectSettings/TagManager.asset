@@ -12,6 +12,8 @@ TagManager:
   - NPCStore
   - Candle
   - Grave
+  - Laptop
+  - Chalk
   layers:
   - Default
   - TransparentFX

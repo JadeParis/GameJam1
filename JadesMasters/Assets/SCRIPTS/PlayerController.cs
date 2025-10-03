@@ -24,16 +24,17 @@ public class PlayerController : MonoBehaviour
 
     public float distance;
     Item currentItem;
-    
+    public GameObject cursor;
 
    // public GameObject prompt;
 
     void Start()
     {
+        cursor.SetActive(true);
         // Movmement stuff
         characterController = GetComponent<CharacterController>();
-       // Cursor.lockState = CursorLockMode.Locked;
-       // Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
      void Update()
