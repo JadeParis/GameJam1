@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class TaskManager : MonoBehaviour
@@ -88,6 +89,25 @@ public class TaskManager : MonoBehaviour
         {
             gravecross.SetActive(true);
             diggingtask.SetActive(true);
+        }
+
+  
+        if (chalkTaskComplete)
+        {
+            chalkCross.SetActive(true);
+        }
+        else
+        {
+            chalkCross.SetActive(false);
+        }
+
+        if(cutBodyTaskComplete)
+        {
+            cutBodyCross.SetActive(true);
+        }
+        else
+        {
+            cutBodyCross.SetActive(false);
         }
         
         

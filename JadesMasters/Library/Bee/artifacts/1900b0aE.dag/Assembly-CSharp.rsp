@@ -365,6 +365,8 @@
 "Assets/CutSceneManager.cs"
 "Assets/DisplayCandles.cs"
 "Assets/DontDestroy.cs"
+"Assets/Fade.cs"
+"Assets/FindNPC.cs"
 "Assets/FlickeringLight.cs"
 "Assets/game jam/AudioManager.cs"
 "Assets/game jam/CinemachinePOVExtention.cs"

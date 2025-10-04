@@ -413,7 +413,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bf72b0ae9f806747a84fd8dea239db9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cutsceneTimer: 20
+  cutsceneTimer: 5
   loadLevelNum: 3
 --- !u!4 &748722354
 Transform:

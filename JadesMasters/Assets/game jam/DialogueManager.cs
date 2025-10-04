@@ -26,7 +26,7 @@ public class DialogueManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-      
+        chalk.SetActive(false);
         sentences = new Queue<string>();
         matches.SetActive(false);
         grave = false;
@@ -93,13 +93,24 @@ public class DialogueManager : MonoBehaviour
             
         }
     }
-   
+    public bool creepChalk;
+    public GameObject chalk;
     void EndDialogue()
     {
         dialogueActive = false;
 
         animator.SetBool("IsOpen", false);
         Debug.Log("end of convosation");
+
+        if (creepChalk)
+        {
+            chalk.SetActive(true);
+        }
+        else
+        {
+            chalk.SetActive(false);
+        }
+
 
         if (steal)
         {

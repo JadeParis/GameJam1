@@ -13,7 +13,7 @@ using Unity.Collections;
 
 public class Interact : MonoBehaviour
 {
-    public Item currentItem;
+   
     public float distance;
     public GameObject phone;
     public GameObject phoneSprite;
@@ -21,17 +21,22 @@ public class Interact : MonoBehaviour
     public bool phoneOn;
     public bool allowPhone;
     public List<GameObject> myGameObjects;
-
+    public GameObject deadBody;
     public DialogueTrigger TriggerGrave;
     public DialogueTrigger TriggerStore;
     public DialogueTrigger TriggerCreep;
     public ItemStorage itemStore;
 
+    public GameObject matches;
     public ShakePhone shake;
 
     public GameObject candleHolder;
     public DialogueManager dialogueManager;
 
+    public Transform player;
+    public Transform StartingPoint;
+    public bool talking;
+    public bool daytwoevents;
     //public GameObject chalkCross;
     //public GameObject matchesCross;
     //public GameObject bodyCross;
@@ -47,7 +52,7 @@ public class Interact : MonoBehaviour
     public GameObject candlesCross;
     public bool CandleCollected;
 
-
+    public GameObject creep;
     //scripts 
     public DialogueManager dialogue;
     public ItemStorage items;
@@ -56,33 +61,47 @@ public class Interact : MonoBehaviour
 
     public int candleScore;
     public bool candleListMade;
-    public GameObject chalk;
-
+   
     public bool daytwo;
+    public Fade fade;
+    public PlayerController playerController;
+    public GameObject grave;
+   
     // Start is called before the first frame update
     void Start()
     {
+        ///FindNPCS();
 
         player.transform.localPosition = StartingPoint.transform.position;
         player.rotation = StartingPoint.transform.rotation;
-        chalk.SetActive(false);
+        
         reddit.SetActive(false);
+        
+        axe.SetActive(false);
+        deadBody.SetActive(false);
+        creep.SetActive(false);
         candleListMade = false;
         candleScore = 0;
         myGameObjects = new List<GameObject>();
         phoneOn = false;
-        allowPhone = true;
+        allowPhone = false;
         CandleCollected = false;
         taskManager.axeSprite.SetActive(false);
-
+       
     }
 
     // Update is called once per frame
     void Update()
     {
-        Interactable();
+        Interactable(fade);
         Phone();
 
+        if (TriggerGrave == null || TriggerCreep == null || TriggerStore == null || creep == null)
+            FindNPCS();
+        else
+        {
+            return;
+        }
 
         if (phoneOn)
         {
@@ -97,6 +116,7 @@ public class Interact : MonoBehaviour
         if(allowPhone)
         {
             UIphone.SetActive(true);
+            phoneSprite.SetActive(false);
         }
         else
         {
@@ -104,12 +124,73 @@ public class Interact : MonoBehaviour
             phoneSprite.SetActive(false);
         }
 
-        
+        if (daytwo)
+        {
+            
+            player.transform.localPosition = StartingPoint.transform.position;
+            player.rotation = StartingPoint.transform.rotation;
+            allowPhone = true;
+            deadBody.SetActive(true);
+            daytwoevents = true;
+            creep.SetActive(true);
+            grave.SetActive(false);
+
+        }
+
+      
+
     }
-    public Transform player;
-    public Transform StartingPoint;
-    public bool talking;
-    public void Interactable()
+
+    public void FindNPCS()
+    {
+        // Re-find NPC every time the scene loads
+        GameObject npc = GameObject.FindGameObjectWithTag("NPCGrave");
+        if (npc != null)
+        {
+            TriggerGrave = npc.GetComponent<DialogueTrigger>();
+            Debug.Log("Found");
+            if (TriggerGrave == null)
+                Debug.LogWarning("no script");
+        }
+        else
+        {
+            Debug.LogWarning("NopeG");
+        }
+
+        // Re-find NPC every time the scene loads
+        GameObject npcStore = GameObject.FindGameObjectWithTag("NPCStore");
+        if (npcStore != null)
+        {
+            TriggerStore = npcStore.GetComponent<DialogueTrigger>();
+            Debug.Log("Found");
+            if (TriggerStore == null)
+                Debug.LogWarning("noscript");
+        }
+        else
+        {
+            Debug.LogWarning("NopeS");
+        }
+
+        // Re-find NPC every time the scene loads
+        GameObject npcCreep = GameObject.FindGameObjectWithTag("NPCCreep");
+        if (npcCreep != null)
+        {
+            TriggerCreep = npcCreep.GetComponent<DialogueTrigger>();
+            creep = npcCreep;
+           
+            Debug.Log("Found");
+            if (TriggerCreep == null)
+                Debug.LogWarning("no script");
+            if (creep == null)
+                Debug.LogWarning("nocreep!");
+        }
+        else
+        {
+            Debug.LogWarning("NopeC");
+        }
+    }
+
+    public void Interactable(Fade fade)
     {
         RaycastHit hit;
 
@@ -151,12 +232,12 @@ public class Interact : MonoBehaviour
                     {
                         
                         SceneManager.LoadSceneAsync(2);
-                        
-                        player.transform.localPosition = StartingPoint.transform.position;
-                        player.rotation = StartingPoint.transform.rotation;
-                        
+
+                        //player.transform.localPosition = StartingPoint.transform.position;
+                        //player.rotation = StartingPoint.transform.rotation;
+                       
                         taskManager.dayTwo = true;
-                        daytwo = true;
+                        //daytwo = true;
                         //scene two cut scene 
                     }
 
@@ -191,9 +272,11 @@ public class Interact : MonoBehaviour
                     allowPhone = false;
                     
                     
-                    if (daytwo)
+                    if (daytwoevents)
                     {
-                        chalk.SetActive(true);
+                        StopAllCoroutines();
+                        StartCoroutine(Wait());
+                        matches.SetActive(true);
                         dialogueManager.steal = true;
 
                         taskManager.steal = true;
@@ -209,18 +292,19 @@ public class Interact : MonoBehaviour
 
                 if (hit.transform.CompareTag("NPCCreep"))
                 {
+                   
+
                     allowPhone = false;
+
                     if (!talking)
                     {
                         TriggerCreep.TriggerDialogue();
+                        dialogue.creepChalk = true;
                         talking = true;
                     }
 
 
-                    if (daytwo)
-                    {
-                        chalk.SetActive(true);
-                    }
+                 
                   
                     //PHONE SHAKE 
                     ///pick up object 
@@ -231,7 +315,7 @@ public class Interact : MonoBehaviour
 
                 if (hit.transform.CompareTag("Candle"))
                 {
-                    if (!daytwo)
+                    if (!daytwoevents)
                     {
                         candleHolder.SetActive(false);
                     }
@@ -278,7 +362,7 @@ public class Interact : MonoBehaviour
                     items.collected.Add(chalk);
                     chalk.Quantity = 1;
                     chalk.GameObject = hit.collider.gameObject;
-
+                    taskManager.chalkTaskComplete = true;
                     hit.collider.gameObject.SetActive(false);
                     //items.PickUp("Laptop", 1);
                 }
@@ -303,8 +387,8 @@ public class Interact : MonoBehaviour
 
                 if (hit.transform.CompareTag("Body"))
                 {
-                    //add a cross task to this 
-                    
+
+                    fade.ShowUI();
 
                     InventoryInfo body = new InventoryInfo();
                     body.Name = "Body";
@@ -313,8 +397,9 @@ public class Interact : MonoBehaviour
                     body.GameObject = hit.collider.gameObject;
                     hit.collider.gameObject.SetActive(false);
                     taskManager.cutBodyTaskComplete = true;
-                    StopAllCoroutines();
+                   
                     StartCoroutine(Wait());
+                   
 
                 }
 
@@ -330,6 +415,7 @@ public class Interact : MonoBehaviour
                         reddit.SetActive(true);
                         Flashing.SetActive(true);
                         Screenup = true;
+                       
                         
                     }
 
@@ -339,7 +425,7 @@ public class Interact : MonoBehaviour
                         Flashing.SetActive(false);
                         allowPhone = true;
                         Screenup = false;
-
+                        
                         shake.shakestart();
                     }
 
@@ -402,6 +488,8 @@ public class Interact : MonoBehaviour
     {
         //audio here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         yield return new WaitForSeconds(4);
+        fade.HideUI();
+        StopAllCoroutines();
     }
 
   

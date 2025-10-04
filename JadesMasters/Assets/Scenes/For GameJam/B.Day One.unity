@@ -2617,7 +2617,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 159614141}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1e8264517c0bd6041aa5ef7026098889, type: 3}
   m_Name: 
@@ -3766,6 +3766,8 @@ MonoBehaviour:
   interact: {fileID: 828640717}
   graveToDig: {fileID: 723456993}
   dialogueActive: 0
+  creepChalk: 0
+  chalk: {fileID: 1215195296}
 --- !u!4 &252225453
 Transform:
   m_ObjectHideFlags: 0
@@ -4054,7 +4056,7 @@ GameObject:
   - component: {fileID: 294372569}
   m_Layer: 0
   m_Name: -------Player------
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8580,12 +8582,12 @@ Transform:
   m_GameObject: {fileID: 626071141}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -24.09, y: -13.238861, z: 18.32}
+  m_LocalPosition: {x: 81.73877, y: 47.07939, z: 13.597351}
   m_LocalScale: {x: 0.2752, y: 0.2752, z: 0.2752}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 152267537}
-  m_Father: {fileID: 1663826340}
+  m_Father: {fileID: 825232131}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &626071143
 CapsuleCollider:
@@ -8881,7 +8883,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 60
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!1001 &649585346
 PrefabInstance:
@@ -12075,6 +12077,42 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2f48ce524b0e99c46828914d0dd199ca, type: 3}
+--- !u!1 &825232130
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 825232131}
+  m_Layer: 0
+  m_Name: Candles
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &825232131
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 825232130}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 14.591248, y: -60.318253, z: -6.62735}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 626071142}
+  - {fileID: 1424127211}
+  - {fileID: 1127695243}
+  - {fileID: 1850023724}
+  - {fileID: 1850991162}
+  m_Father: {fileID: 2129470972}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &825963782
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12162,7 +12200,7 @@ GameObject:
   - component: {fileID: 828640717}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12253,7 +12291,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79e998667fb9a324f9d3f8e6e740eafd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentItem: {fileID: 0}
   distance: 13.42
   phone: {fileID: 1574195660}
   phoneSprite: {fileID: 256463322}
@@ -12261,29 +12298,35 @@ MonoBehaviour:
   phoneOn: 0
   allowPhone: 0
   myGameObjects: []
-  TriggerGrave: {fileID: 1589857800}
-  TriggerStore: {fileID: 1336269741}
-  TriggerCreep: {fileID: 1828931169}
+  deadBody: {fileID: 974501339}
+  TriggerGrave: {fileID: 0}
+  TriggerStore: {fileID: 0}
+  TriggerCreep: {fileID: 0}
   itemStore: {fileID: 120546873}
+  matches: {fileID: 1714615359}
   shake: {fileID: 926843267}
   candleHolder: {fileID: 1919547968}
   dialogueManager: {fileID: 252225452}
+  player: {fileID: 294372568}
+  StartingPoint: {fileID: 944231054}
+  talking: 0
+  daytwoevents: 0
   reddit: {fileID: 683390165}
   axe: {fileID: 1860986183}
   axeCollected: 0
   candlesCross: {fileID: 677771044}
   CandleCollected: 0
+  creep: {fileID: 718585766}
   dialogue: {fileID: 252225452}
   items: {fileID: 302490789}
   ritual: {fileID: 1891402285}
   taskManager: {fileID: 715903372}
   candleScore: 0
   candleListMade: 0
-  chalk: {fileID: 1215195296}
   daytwo: 0
-  player: {fileID: 294372568}
-  StartingPoint: {fileID: 944231054}
-  talking: 0
+  fade: {fileID: 1185910848}
+  playerController: {fileID: 294372564}
+  grave: {fileID: 0}
   Flashing: {fileID: 1608587931}
   Screenup: 0
 --- !u!1001 &834761231
@@ -13693,7 +13736,7 @@ Transform:
   m_GameObject: {fileID: 944231052}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.72115606, z: 0, w: 0.6927727}
-  m_LocalPosition: {x: 432.20447, y: 286.39, z: 90.82913}
+  m_LocalPosition: {x: 432.71, y: 286.88, z: 89.91}
   m_LocalScale: {x: 0.3956995, y: 0.6111, z: 0.5656902}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -15029,12 +15072,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1007798753}
   m_Layer: 0
-  m_Name: Matches
+  m_Name: Matches holder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1007798753
 Transform:
   m_ObjectHideFlags: 0
@@ -17314,12 +17357,12 @@ Transform:
   m_GameObject: {fileID: 1127695242}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -20.92, y: -13.238861, z: 20.35}
+  m_LocalPosition: {x: 84.90875, y: 47.07939, z: 15.62735}
   m_LocalScale: {x: 0.2752, y: 0.2752, z: 0.2752}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1391025015}
-  m_Father: {fileID: 1663826340}
+  m_Father: {fileID: 825232131}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &1127695244
 CapsuleCollider:
@@ -18110,6 +18153,7 @@ GameObject:
   - component: {fileID: 1185910846}
   - component: {fileID: 1185910845}
   - component: {fileID: 1185910844}
+  - component: {fileID: 1185910848}
   m_Layer: 5
   m_Name: Fade
   m_TagString: Untagged
@@ -18134,8 +18178,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 862.3689, y: 601.1349}
-  m_SizeDelta: {x: 1724.7377, y: 1202.2698}
+  m_AnchoredPosition: {x: 805.2287, y: 479.58905}
+  m_SizeDelta: {x: 2610.895, y: 1856.9087}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!225 &1185910844
 CanvasGroup:
@@ -18212,6 +18256,21 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &1185910848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1185910842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bec3c0b04893c9d4aafc84042533959f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myUIGroup: {fileID: 1185910844}
+  fadeIn: 0
+  fadeOut: 0
 --- !u!1 &1186743964
 GameObject:
   m_ObjectHideFlags: 0
@@ -18617,7 +18676,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!65 &1215195297
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -20407,9 +20466,8 @@ MonoBehaviour:
   dialogue:
     name: Tyler
     sentances:
-    - Jade is creeping on dead people
-    - 'Matches is $5 bucks please '
-    - 'how you so broke u dont even have 5 bucks  '
+    - I hate theives I've been robbed 6 times this month, this town barely has six
+      people living in it....
 --- !u!4 &1342224485 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a7c0f1a2a428f1d4a9c93a7fc020174d, type: 3}
@@ -21831,12 +21889,12 @@ Transform:
   m_GameObject: {fileID: 1424127210}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -19.22, y: -13.238861, z: 18.53}
+  m_LocalPosition: {x: 86.608765, y: 47.07939, z: 13.80735}
   m_LocalScale: {x: 0.2752, y: 0.2752, z: 0.2752}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1369571630}
-  m_Father: {fileID: 1663826340}
+  m_Father: {fileID: 825232131}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &1424127212
 CapsuleCollider:
@@ -24666,11 +24724,11 @@ MonoBehaviour:
   dialogue:
     name: Drew
     sentances:
-    - yum yum
-    - 'I am jade jade jade jade hello hi nice to meetyou i work in a graveyard
-
-'
-    - 'jade I am '
+    - Hey
+    - Yeah you can come in I guess I dont care....
+    - 'you need an axe? why do you need that '
+    - Actually I dont care... I have one I think I left it somewhere near the cottage
+    - 'hurry up I dont want my boss to see you '
 --- !u!136 &1589857801
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -25512,17 +25570,12 @@ Transform:
   m_GameObject: {fileID: 1663826339}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 120.42, y: 0, z: -11.35}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1891402284}
   - {fileID: 822367455}
-  - {fileID: 626071142}
-  - {fileID: 1424127211}
-  - {fileID: 1127695243}
-  - {fileID: 1850023724}
-  - {fileID: 1850991162}
   - {fileID: 984172855}
   - {fileID: 296980662}
   m_Father: {fileID: 2129470972}
@@ -26209,7 +26262,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1714615360
 Transform:
   m_ObjectHideFlags: 0
@@ -32568,6 +32621,7 @@ Transform:
   - {fileID: 245274023}
   - {fileID: 1215195300}
   - {fileID: 1860986184}
+  - {fileID: 1919547969}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1814462564
@@ -32872,7 +32926,7 @@ MonoBehaviour:
     sentances:
     - want some chalk
     - real powdery
-    - 'first sample is free '
+    - 'for you first sample free '
 --- !u!136 &1828931170
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -33323,12 +33377,12 @@ Transform:
   m_GameObject: {fileID: 1850023723}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -23.09, y: -13.238861, z: 15.5}
+  m_LocalPosition: {x: 82.73877, y: 47.07939, z: 10.777351}
   m_LocalScale: {x: 0.2752, y: 0.2752, z: 0.2752}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 145132095}
-  m_Father: {fileID: 1663826340}
+  m_Father: {fileID: 825232131}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &1850023725
 CapsuleCollider:
@@ -33431,12 +33485,12 @@ Transform:
   m_GameObject: {fileID: 1850991161}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -19.63, y: -13.238861, z: 16.4}
+  m_LocalPosition: {x: 86.19876, y: 47.07939, z: 11.677353}
   m_LocalScale: {x: 0.2752, y: 0.2752, z: 0.2752}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1419876625}
-  m_Father: {fileID: 1663826340}
+  m_Father: {fileID: 825232131}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &1850991163
 CapsuleCollider:
@@ -34479,7 +34533,7 @@ Transform:
   m_GameObject: {fileID: 1919547968}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -16.399841, y: -11.111328, z: -20.588287}
+  m_LocalPosition: {x: 329.11673, y: 288.54053, z: 121.41223}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -34488,7 +34542,7 @@ Transform:
   - {fileID: 422454906}
   - {fileID: 876383844}
   - {fileID: 60228102}
-  m_Father: {fileID: 2129470972}
+  m_Father: {fileID: 1814462563}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1922392904
 GameObject:
@@ -42129,7 +42183,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1663826340}
-  - {fileID: 1919547969}
+  - {fileID: 825232131}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2129470973
@@ -42821,7 +42875,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 48
   m_TargetDisplay: 0
 --- !u!223 &1564284087582002129
 Canvas:
@@ -42844,7 +42898,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 48
   m_TargetDisplay: 0
 --- !u!224 &1769402233087168809
 RectTransform:
@@ -44075,7 +44129,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 48
   m_TargetDisplay: 0
 --- !u!224 &7772891160755730730
 RectTransform:
