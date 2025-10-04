@@ -5,16 +5,16 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 638949936557671942
-    m_Hash: 928778577
+      ticks: 638952156443953115
+    m_Hash: 2126876916
   m_LockFileStatus:
     m_FilePath: D:/New folder (2)/GameJam1/JadesMasters/Packages/packages-lock.json
     m_PathExists: 1
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 638949936557681997
-    m_Hash: 1693366256
+      ticks: 638952156455367880
+    m_Hash: 1852852177
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
 m_LocalPackages:
@@ -549,6 +549,7 @@ m_ResolvedPackages:
     - 1.14.0
     - 1.14.1
     - 1.14.2
+    - 1.15.0
     compatible:
     - 1.7.0
     - 1.8.0-pre.1
@@ -567,6 +568,7 @@ m_ResolvedPackages:
     - 1.14.0
     - 1.14.1
     - 1.14.2
+    - 1.15.0
     recommended: 1.7.0
     deprecated: []
   dependencies:

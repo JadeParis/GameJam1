@@ -32,8 +32,8 @@ public class MenuManager : MonoBehaviour
     private bool isPaused;
 
 
-  
 
+    public Interact interact;
     
     private void Start()
     {
@@ -49,6 +49,7 @@ public class MenuManager : MonoBehaviour
             if (!isPaused)
             {
                 Pause();
+
             }
             else
             {
@@ -63,7 +64,7 @@ public class MenuManager : MonoBehaviour
     public void Pause()
     {
         Debug.LogWarning("Paused");
-
+        interact.allowPhone = false;
         isPaused = true;
         player.canMove = false;
         Time.timeScale = 0f;
@@ -84,7 +85,7 @@ public class MenuManager : MonoBehaviour
         Debug.LogWarning("unPaused");
         isPaused = false;
 
-       
+        interact.allowPhone = true;
 
         Time.timeScale = 1f;
 

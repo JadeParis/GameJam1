@@ -27,11 +27,14 @@ public class Interact : MonoBehaviour
     public DialogueTrigger TriggerCreep;
     public ItemStorage itemStore;
 
+   
     public GameObject matches;
     public ShakePhone shake;
 
     public GameObject candleHolder;
     public DialogueManager dialogueManager;
+
+    public GameObject laptop;
 
     public Transform player;
     public Transform StartingPoint;
@@ -66,7 +69,9 @@ public class Interact : MonoBehaviour
     public Fade fade;
     public PlayerController playerController;
     public GameObject grave;
-   
+
+
+    public bool phoneintro;
     // Start is called before the first frame update
     void Start()
     {
@@ -76,20 +81,21 @@ public class Interact : MonoBehaviour
         player.rotation = StartingPoint.transform.rotation;
         
         reddit.SetActive(false);
-        
+        // phoneSprite.SetActive(false);
+        laptop.SetActive(true);
         axe.SetActive(false);
         deadBody.SetActive(false);
         creep.SetActive(false);
         candleListMade = false;
         candleScore = 0;
         myGameObjects = new List<GameObject>();
-        phoneOn = false;
+        phoneSprite.SetActive(false);
         allowPhone = false;
         CandleCollected = false;
         taskManager.axeSprite.SetActive(false);
        
     }
-
+   
     // Update is called once per frame
     void Update()
     {
@@ -103,16 +109,20 @@ public class Interact : MonoBehaviour
             return;
         }
 
-        if (phoneOn)
+        if (phoneintro)
         {
-            phone.SetActive(true);
-            phoneSprite.SetActive(false);
+            if (phoneOn)
+            {
+                phone.SetActive(true);
+                phoneSprite.SetActive(false);
+            }
+            else
+            {
+                phone.SetActive(false);
+                phoneSprite.SetActive(true);
+            }
         }
-        else
-        {
-            phone.SetActive(false);
-            phoneSprite.SetActive(true);
-        }
+       
         if(allowPhone)
         {
             UIphone.SetActive(true);
@@ -130,6 +140,7 @@ public class Interact : MonoBehaviour
             player.transform.localPosition = StartingPoint.transform.position;
             player.rotation = StartingPoint.transform.rotation;
             allowPhone = true;
+            laptop.SetActive(false);
             deadBody.SetActive(true);
             daytwoevents = true;
          
@@ -426,11 +437,12 @@ public class Interact : MonoBehaviour
 
                     if (!Screenup) // If laptop is CLOSED -> open it
                     {
-                        allowPhone = false;
+                        phoneintro = true;
+                        allowPhone = true;
                         reddit.SetActive(true);
                         Flashing.SetActive(true);
                         Screenup = true;
-
+                        playerController.canMove = false;
                         phoneSprite.SetActive(true);
                     }
 
@@ -439,9 +451,9 @@ public class Interact : MonoBehaviour
                        
                         reddit.SetActive(false);
                         Flashing.SetActive(false);
-                        allowPhone = true;
-                        Screenup = false;
                        
+                        Screenup = false;
+                        playerController.canMove = true;
                         shake.shakestart();
                     }
 

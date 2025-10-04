@@ -24,7 +24,10 @@ public class DialogueManager : MonoBehaviour
     public bool dialogueActive = false;
 
     public int speed;
+    public PlayerController playerController;
+    public Transform player;
 
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -45,6 +48,10 @@ public class DialogueManager : MonoBehaviour
 
     public void StartDialoque(Dialogue dialogue)
     {
+           
+    
+       
+      
 
         dialogueActive = true;
         animator.SetBool("IsOpen", true);
@@ -53,7 +60,7 @@ public class DialogueManager : MonoBehaviour
         Debug.Log("Starting convosation with" + dialogue.name);
 
         sentences.Clear();
-
+        playerController.canMove = false;
         foreach (string sentence in dialogue.sentances)
         {
             sentences.Enqueue(sentence);
@@ -99,6 +106,7 @@ public class DialogueManager : MonoBehaviour
     public GameObject chalk;
     void EndDialogue()
     {
+        playerController.canMove = true; ;
         dialogueActive = false;
 
         animator.SetBool("IsOpen", false);

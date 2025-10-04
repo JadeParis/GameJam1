@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
     Item currentItem;
     public GameObject cursor;
 
-   // public GameObject prompt;
+    // public GameObject prompt;
 
     void Start()
     {

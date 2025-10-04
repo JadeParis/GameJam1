@@ -380,6 +380,7 @@
 "Assets/game jam/MainMenu/MainMenu.cs"
 "Assets/HeadBobController.cs"
 "Assets/Laptop.cs"
+"Assets/NPCLock.cs"
 "Assets/Ritual.cs"
 "Assets/SCRIPTS/BlinkTransition.cs"
 "Assets/SCRIPTS/BUTTON.cs"
