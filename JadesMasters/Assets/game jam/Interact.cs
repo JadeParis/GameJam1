@@ -116,12 +116,12 @@ public class Interact : MonoBehaviour
         if(allowPhone)
         {
             UIphone.SetActive(true);
-            phoneSprite.SetActive(false);
+           // phoneSprite.SetActive(false);
         }
         else
         {
             UIphone.SetActive(false);
-            phoneSprite.SetActive(false);
+            //phoneSprite.SetActive(false);
         }
 
         if (daytwo)
@@ -132,9 +132,14 @@ public class Interact : MonoBehaviour
             allowPhone = true;
             deadBody.SetActive(true);
             daytwoevents = true;
-            creep.SetActive(true);
+         
+            if (creep != null)
+            {
+                creep.SetActive(true);
+            }
             grave.SetActive(false);
 
+            daytwo = false;
         }
 
       
@@ -404,6 +409,16 @@ public class Interact : MonoBehaviour
                 }
 
 
+                if (hit.transform.CompareTag("Eye"))
+                {
+
+                    changeColour = true;
+
+
+                }
+
+
+
                 ////Check Laptop Screen Start
 
                 if (hit.transform.CompareTag("Laptop"))
@@ -415,17 +430,18 @@ public class Interact : MonoBehaviour
                         reddit.SetActive(true);
                         Flashing.SetActive(true);
                         Screenup = true;
-                       
-                        
+
+                        phoneSprite.SetActive(true);
                     }
 
                     else // If laptop is OPEN -> close it
                     {
+                       
                         reddit.SetActive(false);
                         Flashing.SetActive(false);
                         allowPhone = true;
                         Screenup = false;
-                        
+                       
                         shake.shakestart();
                     }
 
@@ -459,7 +475,7 @@ public class Interact : MonoBehaviour
 
         }
     }
-
+    public bool changeColour;
     public GameObject Flashing;
     public bool Screenup;
     public void Phone()

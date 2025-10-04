@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem.HID;
 using UnityEngine.UI;
+using TMPro;
 
 public class DialogueManager : MonoBehaviour
 {
-    public Text nameText;
-    public Text dialogueText;
+    public TextMeshProUGUI nameText;
+    public TextMeshProUGUI dialogueText;
     public Queue<string> sentences;
 
     public Animator animator;
@@ -21,7 +22,8 @@ public class DialogueManager : MonoBehaviour
     public GameObject graveToDig;
 
     public bool dialogueActive = false;
-   
+
+    public int speed;
 
     // Start is called before the first frame update
     void Start()
@@ -89,7 +91,7 @@ public class DialogueManager : MonoBehaviour
         foreach(char letter in  sentence.ToCharArray())
         {
             dialogueText.text += letter;
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.1f);
             
         }
     }

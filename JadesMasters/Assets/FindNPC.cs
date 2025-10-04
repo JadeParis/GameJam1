@@ -17,11 +17,11 @@ public class FindNPC : MonoBehaviour
 
 
             if (interact == null)
-                Debug.LogWarning("NPC found but no DialogueTrigger on it!");
+                Debug.LogWarning("Nw");
         }
         else
         {
-            Debug.LogWarning("No NPC with tag 'NPC' found in this scene!");
+            Debug.LogWarning("Nw");
         }
    
     }
