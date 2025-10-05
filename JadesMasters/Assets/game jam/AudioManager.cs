@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.UIElements;
 using static Unity.VisualScripting.Member;
 
@@ -16,6 +17,9 @@ public class AudioManager : MonoBehaviour
 
     [Range (0f, 1f)]
     public float musicVolume;
+
+    public AudioMixerGroup sfxMixer;
+    public AudioMixerGroup musicMixer;
     public void Awake()
     {
         if(instance != null && instance != this)
@@ -39,32 +43,72 @@ public class AudioManager : MonoBehaviour
 
             s.source.playOnAwake = false;
 
+            s.source.outputAudioMixerGroup = sfxMixer;
+     
+
         }
 
         musicSource = gameObject.AddComponent<AudioSource>();
+        musicSource.outputAudioMixerGroup = musicMixer;
+
+        musicSource.playOnAwake=false;
 
     }
 
     public void PlaySFX(string name)
     {
-        Sound s = Array.Find(sfxLibary, sound => sound.name == name); 
-        if (s == null)
-        {
-            Debug.LogError("npSound Found Of That Name");
-
-        }
-
+        Sound s = FindSound(sfxLibary, name);
+        
         if (s.source.isPlaying)
         {
             return;
         }
 
         s.source.Play();
+
+      
     }
 
+    public void PlayMusic(string name)
+    {
+        Sound s = FindSound(musicLibary, name);
+
+        s.source.clip = s.clip;
+        s.source.loop = s.loop;
+        s.source.volume = s.maxVolume * musicVolume;
+
+        if (s == null)
+        {
+            Debug.Log("NoSound");
+        }
+
+        s.source.Play();
+    }
+
+
+     Sound FindSound(Sound[] libary, string name)
+      {
+            Sound s = Array.Find(libary, sound => sound.name == name);
+
+            if (s == null)
+            {
+                Debug.LogError("npSound Found Of That Name");
+
+            }
+
+            
+                return s;
+            
+
+
+     }
+    
     public void StopSFX(string name)
     {
         Sound s = Array.Find(sfxLibary, sound => sound.name == name);
+
+      
+
         if (s == null)
         {
             Debug.LogError("npSound Found Of That Name");

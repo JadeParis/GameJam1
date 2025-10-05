@@ -26,6 +26,15 @@ public class PlayerController : MonoBehaviour
     Item currentItem;
     public GameObject cursor;
 
+    public AudioSource footstepSource;
+   
+
+
+
+    public AudioClip[] Walk;
+    public float stepDelay = 0.5f;
+    private float stepTimer = 0f;
+
     // public GameObject prompt;
 
     void Start()
@@ -35,12 +44,13 @@ public class PlayerController : MonoBehaviour
         characterController = GetComponent<CharacterController>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
     }
 
      void Update()
     {
         DetectObject();
-
+      
         if (Input.GetKeyDown(KeyCode.E) && currentItem != null)
         {
             canMove = false;
@@ -69,6 +79,7 @@ public class PlayerController : MonoBehaviour
             transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
         }
 
+        HandleFootsteps(isRunning);
     }
 
     void DetectObject()
@@ -94,4 +105,31 @@ public class PlayerController : MonoBehaviour
         Debug.DrawRay(transform.position, transform.forward * distance, Color.red);
     }
 
+
+    void HandleFootsteps(bool isRunning)
+    {
+
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+        {
+            
+            Debug.Log("Player is moving, velocity: " + characterController.velocity.magnitude);
+            stepTimer -= Time.deltaTime;
+            if (stepTimer <= 0f)
+            {
+                if (Walk.Length > 0 && footstepSource != null)
+                {
+                    footstepSource.Play();
+                }
+                stepTimer = isRunning ? stepDelay / 0.5f : stepDelay;
+            }
+            else
+            {
+                stepTimer = 0f;
+                footstepSource.Pause();
+            }
+        }
+      
+    }
 }
+
+

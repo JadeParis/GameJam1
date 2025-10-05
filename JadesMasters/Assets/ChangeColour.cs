@@ -6,7 +6,7 @@ public class ChangeColour : MonoBehaviour
 {
     public ParticleSystem targetParticleSystem; // Assign this in the Inspector
     public Color newStartColor = Color.green;
-    public Interact interact;
+    public PlayerInteract interact;
     public void Update()
     {
         if (targetParticleSystem == null)

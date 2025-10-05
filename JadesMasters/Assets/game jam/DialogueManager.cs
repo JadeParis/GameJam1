@@ -17,6 +17,7 @@ public class DialogueManager : MonoBehaviour
     public bool steal;
 
     public bool grave;
+    public PlayerInteract Pinteract;
     public Interact interact;
 
     public GameObject graveToDig;
@@ -132,7 +133,7 @@ public class DialogueManager : MonoBehaviour
         }
 
         interact.allowPhone = true;
-        interact.talking = false;
+        Pinteract.talking = false;
 
         //steal the matches 
 

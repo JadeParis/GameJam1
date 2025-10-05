@@ -10,6 +10,7 @@ using UnityEngine.SocialPlatforms.Impl;
 using System.Linq;
 using System;
 using Unity.Collections;
+using UnityEngine.InputSystem.HID;
 
 public class Interact : MonoBehaviour
 {
@@ -22,44 +23,29 @@ public class Interact : MonoBehaviour
     public bool allowPhone;
     public List<GameObject> myGameObjects;
     public GameObject deadBody;
-    public DialogueTrigger TriggerGrave;
-    public DialogueTrigger TriggerStore;
-    public DialogueTrigger TriggerCreep;
-    public ItemStorage itemStore;
-
-   
-    public GameObject matches;
-    public ShakePhone shake;
-
+  
     public GameObject candleHolder;
-    public DialogueManager dialogueManager;
-
+ 
     public GameObject laptop;
 
     public Transform player;
     public Transform StartingPoint;
-    public bool talking;
+   
     public bool daytwoevents;
-    //public GameObject chalkCross;
-    //public GameObject matchesCross;
-    //public GameObject bodyCross;
-    //public GameObject axeCross;
-    //public GameObject axeSprite;
-    //public GameObject axetask;
-
+   
     public GameObject reddit;
     public GameObject axe;
-    public bool axeCollected;
+    
 
     //Candle Collection
-    public GameObject candlesCross;
+   
     public bool CandleCollected;
 
     public GameObject creep;
     //scripts 
-    public DialogueManager dialogue;
-    public ItemStorage items;
-    public Ritual ritual;
+    
+    
+    
     public TaskManager taskManager;
 
     public int candleScore;
@@ -67,11 +53,11 @@ public class Interact : MonoBehaviour
    
     public bool daytwo;
     public Fade fade;
-    public PlayerController playerController;
     public GameObject grave;
 
 
     public bool phoneintro;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -79,7 +65,7 @@ public class Interact : MonoBehaviour
 
         player.transform.localPosition = StartingPoint.transform.position;
         player.rotation = StartingPoint.transform.rotation;
-        
+        candleHolder.SetActive(false);
         reddit.SetActive(false);
         // phoneSprite.SetActive(false);
         laptop.SetActive(true);
@@ -93,21 +79,16 @@ public class Interact : MonoBehaviour
         allowPhone = false;
         CandleCollected = false;
         taskManager.axeSprite.SetActive(false);
+        phoneOn = false;
        
     }
    
     // Update is called once per frame
     void Update()
     {
-        Interactable(fade);
+        
         Phone();
-
-        if (TriggerGrave == null || TriggerCreep == null || TriggerStore == null || creep == null)
-            FindNPCS();
-        else
-        {
-            return;
-        }
+       
 
         if (phoneintro)
         {
@@ -153,347 +134,16 @@ public class Interact : MonoBehaviour
             grave.SetActive(false);
 
             daytwo = false;
+            candleHolder.SetActive(true );
         }
 
       
 
     }
 
-    public void FindNPCS()
-    {
-        // Re-find NPC every time the scene loads
-        GameObject npc = GameObject.FindGameObjectWithTag("NPCGrave");
-        if (npc != null)
-        {
-            TriggerGrave = npc.GetComponent<DialogueTrigger>();
-            Debug.Log("Found");
-            if (TriggerGrave == null)
-                Debug.LogWarning("no script");
-        }
-        else
-        {
-            Debug.LogWarning("NopeG");
-        }
-
-        // Re-find NPC every time the scene loads
-        GameObject npcStore = GameObject.FindGameObjectWithTag("NPCStore");
-        if (npcStore != null)
-        {
-            TriggerStore = npcStore.GetComponent<DialogueTrigger>();
-            Debug.Log("Found");
-            if (TriggerStore == null)
-                Debug.LogWarning("noscript");
-        }
-        else
-        {
-            Debug.LogWarning("NopeS");
-        }
-
-        // Re-find NPC every time the scene loads
-        GameObject npcCreep = GameObject.FindGameObjectWithTag("NPCCreep");
-        if (npcCreep != null)
-        {
-            TriggerCreep = npcCreep.GetComponent<DialogueTrigger>();
-            creep = npcCreep;
-           
-            Debug.Log("Found");
-            if (TriggerCreep == null)
-                Debug.LogWarning("no script");
-            if (creep == null)
-                Debug.LogWarning("nocreep!");
-        }
-        else
-        {
-            Debug.LogWarning("NopeC");
-        }
-    }
-
-    public void Interactable(Fade fade)
-    {
-        RaycastHit hit;
-
-
-        if (Physics.Raycast(transform.position, transform.forward, out hit, distance))
-        {
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                //collect audio here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-                Debug.Log("pressed");
-                phoneOn = false;
-
-                if (hit.transform.CompareTag("NPCGrave"))
-                {
-
-                    allowPhone = false;
-                  
-                    
-                    taskManager.bodyTaskComplete = true;
-                    dialogueManager.grave = true;
-
-                    taskManager.AxeActive = true;
-                    taskManager.DigActive = true;
-                    axe.SetActive(true);
-                    if (!talking)
-                    {
-                        TriggerGrave.TriggerDialogue();
-                        talking = true;
-                    }
-                    
-                    ///pick up object 
-
-                }
-
-                if (hit.transform.CompareTag("Grave"))
-                {
-                    if (dialogueManager.grave && axeCollected)
-                    {
-                        
-                        SceneManager.LoadSceneAsync(2);
-
-                        //player.transform.localPosition = StartingPoint.transform.position;
-                        //player.rotation = StartingPoint.transform.rotation;
-                       
-                        taskManager.dayTwo = true;
-                        //daytwo = true;
-                        //scene two cut scene 
-                    }
-
-
-
-                }
-
-                if (hit.transform.CompareTag("Axe"))
-                {
-                    taskManager.axeTaskComplete = true;
-                    //scene two cut scene 
-                    
-                    axeCollected = true;
-
-                    InventoryInfo axe = new InventoryInfo();
-                    axe.Name = "Axe";
-                    items.collected.Add(axe);
-                    axe.Quantity = 1;
-                    axe.GameObject = hit.collider.gameObject;
-                    hit.collider.gameObject.SetActive(false);
-
-                }
-
-                /////////day one ^^^^^^^^^^^^^^^^^^^^^^^^^^
-                if (hit.transform.CompareTag("NPCStore"))
-                {
-                    if (!talking)
-                    {
-                        TriggerStore.TriggerDialogue();
-                        talking = true;
-                    }
-                    allowPhone = false;
-                    
-                    
-                    if (daytwoevents)
-                    {
-                        
-                        StartCoroutine(Wait());
-                        matches.SetActive(true);
-                        dialogueManager.steal = true;
-
-                        taskManager.steal = true;
-
-                        shake.Shake();
-
-                        //set matches true
-                    }
-                    
-                   
-
-                }
-
-                if (hit.transform.CompareTag("NPCCreep"))
-                {
-                   
-
-                    allowPhone = false;
-
-                    if (!talking)
-                    {
-                        TriggerCreep.TriggerDialogue();
-                        dialogue.creepChalk = true;
-                        talking = true;
-                    }
-
-
-                 
-                  
-                    //PHONE SHAKE 
-                    ///pick up object 
-                    ///
-
-
-                }
-
-                if (hit.transform.CompareTag("Candle"))
-                {
-                    if (!daytwoevents)
-                    {
-                        candleHolder.SetActive(false);
-                    }
-                    candleScore += 1;
-                    //collect candle
-
-                    hit.collider.gameObject.SetActive(false);
-
-                    if (candleScore == 5)
-                    {
-                        candlesCross.SetActive(true);
-                    }
-                    Debug.Log("candle triggered");
-
-                    
-                    if (candleListMade)
-                    {
-
-                        InventoryInfo candle = items.collected.Find(i => i.Name == "Candle");
-                        candle.Quantity += 1;
-                    }
-                    else
-                    {
-                        InventoryInfo candle = new InventoryInfo();
-                        candle.Name = "Candle";
-                        items.collected.Add(candle);
-                        candle.Quantity = 1;
-                        candleListMade = true;
-                    }
-
-                }
-
-                
-
-                if (hit.transform.CompareTag("Chalk"))
-                {
-                    taskManager.chalkTaskComplete = true;
-                  
-                    //scene two cut scene 
-
-                    //////// ADD REF TO NPC MAD HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    InventoryInfo chalk = new InventoryInfo();
-                    chalk.Name = "Chalk";
-                    items.collected.Add(chalk);
-                    chalk.Quantity = 1;
-                    chalk.GameObject = hit.collider.gameObject;
-                    taskManager.chalkTaskComplete = true;
-                    hit.collider.gameObject.SetActive(false);
-                    //items.PickUp("Laptop", 1);
-                }
-
-                if (hit.transform.CompareTag("Matches"))
-                {
-                    taskManager.matchesTaskComplete = true;
-                    InventoryInfo matches = new InventoryInfo();
-                    matches.Name = "Matches";
-                    items.collected.Add(matches);
-                    matches.Quantity = 1;
-                    //matches.GameObject = hit.collider.gameObject;
-                    //turn off 
-                    hit.collider.gameObject.SetActive(false);
-                    
-
-
-                }
-
-
-              
-
-                if (hit.transform.CompareTag("Body"))
-                {
-
-                    fade.ShowUI();
-
-                    axe.SetActive(false);
-
-                    InventoryInfo body = new InventoryInfo();
-                    body.Name = "Body";
-                    items.collected.Add(body);
-                    body.Quantity = 1;
-                    body.GameObject = hit.collider.gameObject;
-                    hit.collider.gameObject.SetActive(false);
-                    taskManager.cutBodyTaskComplete = true;
-                   
-                    StartCoroutine(Wait());
-                   
-
-                }
-
-
-                if (hit.transform.CompareTag("Eye"))
-                {
-
-                    changeColour = true;
-
-
-                }
-
-
-
-                ////Check Laptop Screen Start
-
-                if (hit.transform.CompareTag("Laptop"))
-                {
-
-                    if (!Screenup) // If laptop is CLOSED -> open it
-                    {
-                        phoneintro = true;
-                        allowPhone = true;
-                        reddit.SetActive(true);
-                        Flashing.SetActive(true);
-                        Screenup = true;
-                        playerController.canMove = false;
-                        phoneSprite.SetActive(true);
-                    }
-
-                    else // If laptop is OPEN -> close it
-                    {
-                       
-                        reddit.SetActive(false);
-                        Flashing.SetActive(false);
-                       
-                        Screenup = false;
-                        playerController.canMove = true;
-                        shake.shakestart();
-                    }
-
-
-                   
-                    ///pick up object 
-
-                }
-
-                if (hit.transform.CompareTag("RitualSpot"))
-                {
-
-                    ritual.placeCandles();
-                    ritual.PlaceItems();
-
-                    ///pick up object 
-
-                }
-
-
-            }
-
-
-           
-
-
-
-
-            Debug.DrawRay(transform.position, transform.forward * distance, Color.green);
-
-
-        }
-    }
-    public bool changeColour;
-    public GameObject Flashing;
-    public bool Screenup;
+   
+  
+  
     public void Phone()
     {
         if (Input.GetKeyDown(KeyCode.Tab))

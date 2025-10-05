@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FindNPC : MonoBehaviour
 {
-    public Interact interact;
+    public PlayerInteract interact;
    
 
     public void Start()
@@ -12,7 +12,7 @@ public class FindNPC : MonoBehaviour
         GameObject Player = GameObject.FindGameObjectWithTag("Player");
         if (Player != null)
         {
-            interact = Player.GetComponent<Interact>();
+            interact = Player.GetComponent<PlayerInteract>();
             Debug.Log("Found");
 
 

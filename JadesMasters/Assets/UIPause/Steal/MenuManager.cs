@@ -31,7 +31,7 @@ public class MenuManager : MonoBehaviour
 
     private bool isPaused;
 
-
+    public GameObject cursour;
 
     public Interact interact;
     
@@ -68,9 +68,11 @@ public class MenuManager : MonoBehaviour
         isPaused = true;
         player.canMove = false;
         Time.timeScale = 0f;
+        cursour.SetActive(false);
 
 
-        
+
+
 
         Cursor.lockState = CursorLockMode.Confined;
 
@@ -84,7 +86,7 @@ public class MenuManager : MonoBehaviour
         player.canMove = true;
         Debug.LogWarning("unPaused");
         isPaused = false;
-
+        cursour.SetActive(true);
         interact.allowPhone = true;
 
         Time.timeScale = 1f;

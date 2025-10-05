@@ -14,10 +14,14 @@ public class Ritual : MonoBehaviour
     
     public int SacraficedAmount;
 
-    public Transform targetSpot;
+    public GameObject Body;
     public ItemStorage stored;
 
     public GameObject Chalk;
+
+    public bool hasMatches;
+    public bool hasBody;
+    public bool hasChalk;
 
     public void Start()
     {
@@ -26,7 +30,9 @@ public class Ritual : MonoBehaviour
     }
     private void Update()
     {
-        StartRitual();
+        
+       
+        
     }
     public void placeCandles()
     {
@@ -69,13 +75,19 @@ public class Ritual : MonoBehaviour
         Debug.Log("PlaceItem");
         string targetName = "Matches"; // look for this name 
 
-        string targetBody = "Body";
-        string targetChalk = "Chalk";
+        
+       
+
+        Debug.Log("PlaceCandles");
+        InventoryInfo targetBody = items.collected.Find(i => i.Name == "Body");
+        
+
+        InventoryInfo targetChalk = items.collected.Find(i => i.Name == "Chalk");
+       
 
         // making a bool if it has matches 
         bool hasMatches = stored.collected.Any(item => item.Name == targetName);
-        bool hasBody = stored.collected.Any(item => item.Name == targetBody);
-        bool hasChalk  = stored.collected.Any(item => item.Name == targetChalk); 
+       
 
         foreach (GameObject candle in Candles)
         {
@@ -124,25 +136,24 @@ public class Ritual : MonoBehaviour
 
     
 
-        if (hasBody)
+        if (targetBody != null)
         {
-            InventoryInfo item = stored.collected.FirstOrDefault(i => i.Name == targetBody);
-            if (item != null && item.GameObject != null)
-            {
-                ////////////////////////////////////////////////////////////Audio Here thump 
-         
-                item.GameObject.transform.SetParent(targetSpot);
-                item.GameObject.transform.localPosition = Vector3.zero;
-                item.GameObject.transform.localRotation = Quaternion.identity;
+            //InventoryInfo item = stored.collected.FirstOrDefault(i => i.Name == targetBody);
+            //if (item != null && item.GameObject != null)
+            //{
+            //    ////////////////////////////////////////////////////////////Audio Here thump 
+
+                Body.SetActive(true);
+                
                 SacraficedAmount += 1;
-            }
-            else
-            {
-                Debug.Log("noBody");
-            }
+           // }
+           // else
+            //{
+               // Debug.Log("noBody");
+           // }
         }
 
-        if(hasChalk) 
+        if(targetChalk != null) 
         {
 
             Chalk.SetActive(true);
@@ -152,7 +163,12 @@ public class Ritual : MonoBehaviour
 
         }
 
-     
+        if (SacraficedAmount == 4)
+        {
+            //camera shake in here pan to ground camera 
+            SceneManager.LoadSceneAsync(4);
+            //cut scene
+        }
 
     }
 
@@ -180,7 +196,7 @@ public class Ritual : MonoBehaviour
         if(SacraficedAmount == 4)
         {
             //camera shake in here pan to ground camera 
-            SceneManager.LoadSceneAsync(3);
+            SceneManager.LoadSceneAsync(4);
             //cut scene
         }
     }
