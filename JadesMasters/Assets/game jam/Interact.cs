@@ -30,7 +30,8 @@ public class Interact : MonoBehaviour
 
     public Transform player;
     public Transform StartingPoint;
-   
+    public Transform StartingPoint2;
+
     public bool daytwoevents;
    
     public GameObject reddit;
@@ -62,9 +63,13 @@ public class Interact : MonoBehaviour
     void Start()
     {
         ///FindNPCS();
+      
+       
+        
+         player.transform.localPosition = StartingPoint.transform.position;
+         player.rotation = StartingPoint.transform.rotation;
+        
 
-        player.transform.localPosition = StartingPoint.transform.position;
-        player.rotation = StartingPoint.transform.rotation;
         candleHolder.SetActive(false);
         reddit.SetActive(false);
         // phoneSprite.SetActive(false);
@@ -119,13 +124,15 @@ public class Interact : MonoBehaviour
         if (daytwo)
         {
             phoneintro = true;
-            player.transform.localPosition = StartingPoint.transform.position;
-            player.rotation = StartingPoint.transform.rotation;
+            
             allowPhone = true;
             laptop.SetActive(false);
             deadBody.SetActive(true);
             daytwoevents = true;
-         
+
+                player.transform.localPosition = StartingPoint2.transform.position;
+                player.rotation = StartingPoint2.transform.rotation;
+            
             if (creep != null)
             {
                 creep.SetActive(true);
@@ -142,7 +149,7 @@ public class Interact : MonoBehaviour
     }
 
    
-  
+    
   
     public void Phone()
     {

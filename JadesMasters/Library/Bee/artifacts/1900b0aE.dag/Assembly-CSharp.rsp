@@ -365,6 +365,7 @@
 "Assets/ChangeColour.cs"
 "Assets/Chime.cs"
 "Assets/CutSceneManager.cs"
+"Assets/cutscenemanagerend.cs"
 "Assets/DisplayCandles.cs"
 "Assets/DontDestroy.cs"
 "Assets/FacePlayer.cs"

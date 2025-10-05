@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.ProBuilder;
 using UnityEngine.ProBuilder.MeshOperations;
 using UnityEngine.SceneManagement;
 using static UnityEditor.Progress;
@@ -23,9 +24,14 @@ public class Ritual : MonoBehaviour
     public bool hasBody;
     public bool hasChalk;
 
+    public bool Done1;
+    public bool Done2;
+    public bool Done3;
+    public bool Done4;
+    public GameObject candelUI;
     public void Start()
     {
-
+        candelUI.SetActive(true);
         Chalk.SetActive(false);
     }
     private void Update()
@@ -38,7 +44,7 @@ public class Ritual : MonoBehaviour
     {
         Debug.Log("PlaceCandles");
         InventoryInfo candle = items.collected.Find(i => i.Name == "Candle");
-        bool allCandlesActive = Candles.All(c => c.activeSelf);
+       
 
         if (candle != null)
         {
@@ -61,10 +67,18 @@ public class Ritual : MonoBehaviour
             //{
             //    SacraficedAmount += 1;
             //} 
+            bool allCandlesActive = Candles.All(c => c.activeSelf);
 
             if (allCandlesActive)
             {
-                SacraficedAmount += 1;
+                if (!Done4)
+                {
+                    SacraficedAmount += 1;
+                    Done4= true;
+                    candelUI.SetActive(false);
+                }
+
+           
             }
 
         }
@@ -125,7 +139,12 @@ public class Ritual : MonoBehaviour
             if (allChildrenActive)
             {
                 Debug.Log(candle.name + " has all children active!");
-                SacraficedAmount += 1;
+                if (!Done1)
+                {
+                    SacraficedAmount += 1;
+                    Done1 = true;
+                }
+               
              
             }
             else
@@ -144,8 +163,13 @@ public class Ritual : MonoBehaviour
             //    ////////////////////////////////////////////////////////////Audio Here thump 
 
                 Body.SetActive(true);
-                
+
+            if (!Done2)
+            {
                 SacraficedAmount += 1;
+                Done2 = true;
+            }
+               
            // }
            // else
             //{
@@ -157,7 +181,12 @@ public class Ritual : MonoBehaviour
         {
 
             Chalk.SetActive(true);
-            SacraficedAmount += 1;
+            if (!Done3)
+            {
+                SacraficedAmount += 1;
+                Done3 = true;
+            }
+
             ////////////////////////////////Audio herreee!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 
@@ -165,30 +194,40 @@ public class Ritual : MonoBehaviour
 
         if (SacraficedAmount == 4)
         {
+
+            StartCoroutine(Wait());
             //camera shake in here pan to ground camera 
-            SceneManager.LoadSceneAsync(4);
+        
             //cut scene
         }
 
     }
 
- 
-        
-                //  for (int i = 0; i<stored.collected.Count; i++)
-                //                {
-                //                    if (stored.collected[i].Name == targetName)
-                //                    {
-                //                        candle.transform.GetChild(i).gameObject.SetActive(true);
-                //                        // Works here, because i is in scope
 
-                //                    }
-                //                    else
-                //{
-                //    return;
-                //}
-                //                }
+    private IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(4);
+        SceneManager.LoadSceneAsync(4);
 
-   
+       
+    }
+
+
+    //  for (int i = 0; i<stored.collected.Count; i++)
+    //                {
+    //                    if (stored.collected[i].Name == targetName)
+    //                    {
+    //                        candle.transform.GetChild(i).gameObject.SetActive(true);
+    //                        // Works here, because i is in scope
+
+    //                    }
+    //                    else
+    //{
+    //    return;
+    //}
+    //                }
+
+
 
     public void StartRitual()
     {

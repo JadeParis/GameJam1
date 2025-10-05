@@ -161,8 +161,13 @@ public class PlayerInteract : MonoBehaviour
                 // ---------- Grave ----------
                 if (hit.CompareTag("Grave"))
                 {
+                    if (axeCollected)
+                    {
+                        taskManager.diggingTaskComplete = true;
+                    }
                     if (dialogue.grave && axeCollected)
                     {
+                        
                         SceneManager.LoadSceneAsync(2);
                         taskManager.dayTwo = true;
                     }
@@ -331,13 +336,13 @@ public class PlayerInteract : MonoBehaviour
                 }
 
                 // ---------- Ritual Spot ----------
-                if (CompareTag("RitualSpot"))
+                if (hit.CompareTag("RitualSpot"))
                 {
                     ritual.placeCandles();
                     ritual.PlaceItems();
                 }
 
-                if (CompareTag("Leave"))
+                if (hit.CompareTag("Leave"))
                 {
                     if (allowedLeave)
                     {
