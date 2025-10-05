@@ -126,7 +126,8 @@ public class Interact : MonoBehaviour
         if(allowPhone)
         {
             UIphone.SetActive(true);
-           // phoneSprite.SetActive(false);
+           
+            // phoneSprite.SetActive(false);
         }
         else
         {
@@ -136,7 +137,7 @@ public class Interact : MonoBehaviour
 
         if (daytwo)
         {
-            
+            phoneintro = true;
             player.transform.localPosition = StartingPoint.transform.position;
             player.rotation = StartingPoint.transform.rotation;
             allowPhone = true;
@@ -148,6 +149,7 @@ public class Interact : MonoBehaviour
             {
                 creep.SetActive(true);
             }
+
             grave.SetActive(false);
 
             daytwo = false;
@@ -290,7 +292,7 @@ public class Interact : MonoBehaviour
                     
                     if (daytwoevents)
                     {
-                        StopAllCoroutines();
+                        
                         StartCoroutine(Wait());
                         matches.SetActive(true);
                         dialogueManager.steal = true;
@@ -406,6 +408,8 @@ public class Interact : MonoBehaviour
 
                     fade.ShowUI();
 
+                    axe.SetActive(false);
+
                     InventoryInfo body = new InventoryInfo();
                     body.Name = "Body";
                     items.collected.Add(body);
@@ -512,11 +516,13 @@ public class Interact : MonoBehaviour
         }
     }
 
-    IEnumerator Wait()
+    public IEnumerator Wait()
     {
         //audio here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         yield return new WaitForSeconds(4);
         fade.HideUI();
+        Debug.Log("made it!");
+        yield return new WaitForSeconds(1);
         StopAllCoroutines();
     }
 

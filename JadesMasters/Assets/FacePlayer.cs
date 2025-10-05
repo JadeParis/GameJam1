@@ -23,7 +23,11 @@ public class FacePlayer : MonoBehaviour
     {
         if (playerTransform != null)
         {
-            transform.rotation = playerTransform.rotation;
+            // Get only the Y-axis rotation of the player
+            Vector3 targetRotation = new Vector3(0, playerTransform.eulerAngles.y, 0);
+
+            // Apply it to this object
+            transform.rotation = Quaternion.Euler(targetRotation);
         }
     }
 

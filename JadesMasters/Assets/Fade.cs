@@ -18,6 +18,7 @@ public class Fade: MonoBehaviour
     public void HideUI()
     {
         fadeOut = false;
+        fadeIn = false;
     }
 
     private void Update()
@@ -30,12 +31,13 @@ public class Fade: MonoBehaviour
 
                 if(myUIGroup.alpha >= 1)
                 {
-                    fadeIn = false;
+                    fadeIn = true;
+                    fadeOut = false;
                 }
             }
         }
 
-        if (fadeOut)
+        else
         {
             if (myUIGroup.alpha >= 0)
             {
@@ -43,7 +45,8 @@ public class Fade: MonoBehaviour
 
                 if (myUIGroup.alpha == 0)
                 {
-                    fadeOut = false;
+                    fadeOut = true;
+                    fadeIn = false;
                 }
             }
         }
