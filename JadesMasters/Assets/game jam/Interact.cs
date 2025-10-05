@@ -58,6 +58,7 @@ public class Interact : MonoBehaviour
 
 
     public bool phoneintro;
+    public GameObject Menu;
 
     // Start is called before the first frame update
     void Start()
@@ -97,6 +98,7 @@ public class Interact : MonoBehaviour
 
         if (phoneintro)
         {
+            Menu.SetActive(true);
             if (phoneOn)
             {
                 phone.SetActive(true);
@@ -108,11 +110,15 @@ public class Interact : MonoBehaviour
                 phoneSprite.SetActive(true);
             }
         }
-       
-        if(allowPhone)
+        else
+        {
+            Menu.SetActive(false);
+        }
+
+        if (allowPhone)
         {
             UIphone.SetActive(true);
-           
+
             // phoneSprite.SetActive(false);
         }
         else

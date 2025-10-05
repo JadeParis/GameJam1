@@ -44,6 +44,7 @@ public class PlayerInteract : MonoBehaviour
 
     public Vector3 boxSize = new Vector3(1, 2, 1);
 
+    public GameObject E;
 
     public AudioSource Collect;
     public AudioSource EyeChime;
@@ -58,7 +59,7 @@ public class PlayerInteract : MonoBehaviour
     void Start()
     {
         ///FindNPCS();
-
+        E.SetActive(true);
 
     }
 
@@ -68,17 +69,20 @@ public class PlayerInteract : MonoBehaviour
         if (TriggerGrave == null || TriggerCreep == null || TriggerStore == null || creep == null)
             FindNPCS();
 
-
-       
+        
 
         hit();
     }
+   
     public void FindNPCS()
     {
         // Re-find NPC every time the scene loads
         GameObject npc = GameObject.FindGameObjectWithTag("NPCGrave");
+       
         if (npc != null)
         {
+           
+          
             TriggerGrave = npc.GetComponent<DialogueTrigger>();
             Debug.Log("Found");
             if (TriggerGrave == null)
@@ -93,6 +97,8 @@ public class PlayerInteract : MonoBehaviour
         GameObject npcStore = GameObject.FindGameObjectWithTag("NPCStore");
         if (npcStore != null)
         {
+            E.transform.position = npcStore.transform.position;
+            E.SetActive(true);
             TriggerStore = npcStore.GetComponent<DialogueTrigger>();
             Debug.Log("Found");
             if (TriggerStore == null)
@@ -107,6 +113,8 @@ public class PlayerInteract : MonoBehaviour
         GameObject npcCreep = GameObject.FindGameObjectWithTag("NPCCreep");
         if (npcCreep != null)
         {
+            E.transform.position = npcCreep.transform.position;
+            E.SetActive(true);
             TriggerCreep = npcCreep.GetComponent<DialogueTrigger>();
             creep = npcCreep;
 
@@ -137,7 +145,7 @@ public class PlayerInteract : MonoBehaviour
                 // ---------- NPC Grave ----------
                 if (hit.CompareTag("NPCGrave"))
                 {
-
+                    
                     interact.allowPhone = false;
 
                     taskManager.bodyTaskComplete = true;
@@ -157,6 +165,7 @@ public class PlayerInteract : MonoBehaviour
                         talking = true;
                     }
                 }
+               
 
                 // ---------- Grave ----------
                 if (hit.CompareTag("Grave"))
@@ -167,7 +176,7 @@ public class PlayerInteract : MonoBehaviour
                     }
                     if (dialogue.grave && axeCollected)
                     {
-                        
+
                         SceneManager.LoadSceneAsync(2);
                         taskManager.dayTwo = true;
                     }
