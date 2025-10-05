@@ -403,6 +403,7 @@
 "Assets/SelfDestruct.cs"
 "Assets/ShakePhone.cs"
 "Assets/TaskManager.cs"
+"Assets/Teleport.cs"
 "Assets/TextMesh Pro/Examples & Extras/Scripts/Benchmark01.cs"
 "Assets/TextMesh Pro/Examples & Extras/Scripts/Benchmark01_UGUI.cs"
 "Assets/TextMesh Pro/Examples & Extras/Scripts/Benchmark02.cs"

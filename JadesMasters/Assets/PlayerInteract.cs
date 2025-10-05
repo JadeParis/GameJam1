@@ -52,6 +52,9 @@ public class PlayerInteract : MonoBehaviour
     public AudioSource Body;
     public AudioSource Axe;
 
+    public Teleport teleport;
+    public bool allowedLeave;
+
     void Start()
     {
         ///FindNPCS();
@@ -323,6 +326,7 @@ public class PlayerInteract : MonoBehaviour
                         Screenup = false;
                         playerController.canMove = true;
                         shake.shakestart();
+                        allowedLeave = true;
                     }
                 }
 
@@ -332,12 +336,24 @@ public class PlayerInteract : MonoBehaviour
                     ritual.placeCandles();
                     ritual.PlaceItems();
                 }
+
+                if (CompareTag("Leave"))
+                {
+                    if (allowedLeave)
+                    {
+                        teleport.tele();
+                    }
+
+                }
+
+
             }
         }
         
 
 
     }
+  
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;

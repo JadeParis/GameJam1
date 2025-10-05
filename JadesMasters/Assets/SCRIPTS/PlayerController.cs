@@ -111,7 +111,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
         {
-            
+
             Debug.Log("Player is moving, velocity: " + characterController.velocity.magnitude);
             stepTimer -= Time.deltaTime;
             if (stepTimer <= 0f)
@@ -127,6 +127,10 @@ public class PlayerController : MonoBehaviour
                 stepTimer = 0f;
                 footstepSource.Pause();
             }
+        }
+        else
+        {
+            footstepSource.Pause();
         }
       
     }
