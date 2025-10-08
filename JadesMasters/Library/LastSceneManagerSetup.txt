@@ -1,5 +1,0 @@
-sceneSetups:
-- path: Assets/Scenes/For GameJam/B.Day One.unity
-  isLoaded: 1
-  isActive: 1
-  isSubScene: 0
